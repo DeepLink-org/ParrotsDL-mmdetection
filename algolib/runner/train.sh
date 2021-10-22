@@ -19,6 +19,10 @@ echo $pyroot
 export PYTHONPATH=$comroot:$pyroot:$PYTHONPATH
 export MODEL_NAME=$3
 export FRAME_NAME=mmdet
+CONDA_ROOT=/mnt/cache/share/platform/env/miniconda3.6
+MMCV_PATH=${CONDA_ROOT}/envs/${CONDA_DEFAULT_ENV}/mmcvs
+mmcv_version=1.3.10
+export PYTHONPATH=${MMCV_PATH}/${mmcv_version}:$PYTHONPATH
 
 # 4. build necessary parameter
 partition=$1  
