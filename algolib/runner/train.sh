@@ -255,6 +255,46 @@ srun -p $1 -n$2 \
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/grid_rcnn/${MODEL_NAME}.py --launcher=slurm $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/train.${MODEL_NAME}.log.$now
     ;;
+    "point_rend_r50_caffe_fpn_mstrain_1x_coco")
+set -x
+
+srun -p $1 -n$2 \
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
+    python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/point_rend/${MODEL_NAME}.py --launcher=slurm $EXTRA_ARGS \
+    2>&1 | tee algolib_gen/mmdet/train.${MODEL_NAME}.log.$now
+    ;;
+    "detr_r50_8x2_150e_coco")
+set -x
+
+srun -p $1 -n$2 \
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
+    python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/detr/${MODEL_NAME}.py --launcher=slurm $EXTRA_ARGS \
+    2>&1 | tee algolib_gen/mmdet/train.${MODEL_NAME}.log.$now
+    ;;
+    "yolact_r50_1x8_coco")
+set -x
+
+srun -p $1 -n$2 \
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
+    python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/yolact/${MODEL_NAME}.py --launcher=slurm $EXTRA_ARGS \
+    2>&1 | tee algolib_gen/mmdet/train.${MODEL_NAME}.log.$now
+    ;;
+    "centernet_resnet18_dcnv2_140e_coco")
+set -x
+
+srun -p $1 -n$2 \
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
+    python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/centernet/${MODEL_NAME}.py --launcher=slurm $EXTRA_ARGS \
+    2>&1 | tee algolib_gen/mmdet/train.${MODEL_NAME}.log.$now
+    ;;
     *)
       echo "invalid $MODEL_NAME"
       exit 1

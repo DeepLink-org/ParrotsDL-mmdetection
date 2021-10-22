@@ -14,7 +14,7 @@ model = dict(
         norm_eval=False,  # update the statistics of bn
         zero_init_residual=False,
         style='pytorch',
-        init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet50')),
+        init_cfg=dict(type='Pretrained', checkpoint='/mnt/lustre/share_data/parrots_algolib/Pretrain/mmdet/yolact_r50_1x8-f38d58df.pth')),
     neck=dict(
         type='FPN',
         in_channels=[256, 512, 1024, 2048],

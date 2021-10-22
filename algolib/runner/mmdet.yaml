@@ -5,6 +5,10 @@ global_configs:
     seed: 2
     pavi: None 
 
+env_version:
+     pat : pat_latest     #Parrots 0.16.0
+     pyt : pt1.3v1_r0.1
+
 models:
   - mask_rcnn_r101_fpn_1x_coco
   - mask_rcnn_x101_32x4d_fpn_1x_coco

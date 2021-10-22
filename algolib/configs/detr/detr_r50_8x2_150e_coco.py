@@ -12,7 +12,7 @@ model = dict(
         norm_cfg=dict(type='BN', requires_grad=False),
         norm_eval=True,
         style='pytorch',
-        init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet50')),
+        init_cfg=dict(type='Pretrained', checkpoint='/mnt/lustre/share_data/parrots_algolib/Pretrain/mmdet/detr_r50_8x2_150e-2c4b8974.pth')),
     bbox_head=dict(
         type='DETRHead',
         num_classes=80,
