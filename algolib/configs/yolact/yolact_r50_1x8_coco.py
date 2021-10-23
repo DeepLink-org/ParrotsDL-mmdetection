@@ -86,7 +86,7 @@ model = dict(
         max_per_img=100))
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'data/coco/'
+data_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
 img_norm_cfg = dict(
     mean=[123.68, 116.78, 103.94], std=[58.40, 57.12, 57.38], to_rgb=True)
 train_pipeline = [
