@@ -10,7 +10,10 @@ model = dict(
         out_indices=(3, 4),
         out_feature_indices=(22, 34),
         init_cfg=dict(
-            type='Pretrained', checkpoint='/mnt/lustre/share_data/parrots_algolib/Pretrain/mmdet/vgg16_caffe-292e1171.pth')),
+            type='Pretrained',
+            checkpoint=
+            '/mnt/lustre/share_data/parrots_algolib/Pretrain/mmdet/vgg16_caffe-292e1171.pth'
+        )),
     neck=dict(
         type='SSDNeck',
         in_channels=(512, 1024),

@@ -12,7 +12,11 @@ model = dict(
         norm_cfg=dict(type='BN', requires_grad=False),
         norm_eval=True,
         style='pytorch',
-        init_cfg=dict(type='Pretrained', checkpoint='/mnt/lustre/share_data/parrots_algolib/Pretrain/mmdet/deformable_detr_r50_16x2_50e-a12b9512.pth')),
+        init_cfg=dict(
+            type='Pretrained',
+            checkpoint=
+            '/mnt/lustre/share_data/parrots_algolib/Pretrain/mmdet/deformable_detr_r50_16x2_50e-a12b9512.pth'
+        )),
     neck=dict(
         type='ChannelMapper',
         in_channels=[512, 1024, 2048],
