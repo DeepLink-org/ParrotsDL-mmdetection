@@ -10,7 +10,11 @@ model = dict(
         depth=18,
         norm_eval=False,
         norm_cfg=dict(type='BN'),
-        init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet18')),
+        init_cfg=dict(
+            type='Pretrained',
+            checkpoint=
+            '/mnt/lustre/share_data/parrots_algolib/Pretrain/mmdet/centernet_resnet18_dcnv2_140e-c8cd631f'
+        )),
     neck=dict(
         type='CTResNetNeck',
         in_channel=512,
@@ -86,7 +90,7 @@ test_pipeline = [
 ]
 
 dataset_type = 'CocoDataset'
-data_root = 'data/coco/'
+data_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
 
 # Use RepeatDataset to speed up training
 data = dict(

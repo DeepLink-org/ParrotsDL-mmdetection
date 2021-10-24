@@ -14,7 +14,7 @@ model = dict(
         norm_eval=False,  # update the statistics of bn
         zero_init_residual=False,
         style='pytorch',
-        init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet50')),
+        init_cfg=dict(type='Pretrained', checkpoint='/mnt/lustre/share_data/parrots_algolib/Pretrain/mmdet/yolact_r50_1x8-f38d58df.pth')),
     neck=dict(
         type='FPN',
         in_channels=[256, 512, 1024, 2048],
@@ -86,7 +86,7 @@ model = dict(
         max_per_img=100))
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'data/coco/'
+data_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
 img_norm_cfg = dict(
     mean=[123.68, 116.78, 103.94], std=[58.40, 57.12, 57.38], to_rgb=True)
 train_pipeline = [
