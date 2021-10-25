@@ -1,5 +1,27 @@
-set -x
 #!/bin/bash
+set -x
+
+# 0. build soft link for mm configs
+workdir=$(cd $(dirname $1); pwd)
+if [[ "$workdir" =~ "algolib/mmdet" ]]
+then 
+    if [ -d "$workdir/algolib/configs" ]
+    then
+        rm -rf $workdir/algolib/configs
+        ln -s $workdir/configs $workdir/algolib/
+    else
+        ln -s $workdir/configs $workdir/algolib/
+    fi
+else
+    if [ -d "$workdir/algolib/mmdet/algolib/configs" ]
+    then
+        rm -rf $workdir/algolib/mmdet/algolib/configs
+        ln -s $workdir/algolib/mmdet/configs $workdir/algolib/mmdet/algolib/
+    else
+        ln -s $workdir/algolib/mmdet/configs $workdir/algolib/mmdet/algolib/
+    fi
+fi
+
 # 1. build file folder for save log,format: algolib_gen/frame
 mkdir -p algolib_gen/mmdet/$3
 export PYTORCH_VERSION=1.4

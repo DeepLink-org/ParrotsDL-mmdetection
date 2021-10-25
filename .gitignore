@@ -121,3 +121,4 @@ work_dirs/
 *.pth
 *.py~
 *.sh~
+algolib_gen/*
