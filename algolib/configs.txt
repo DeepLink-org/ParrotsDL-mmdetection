@@ -1,0 +1,3 @@
+Attention:
+1. The configs are  'algolib/mmdet/configs' in mmdet.
+2. The soft link will be built from 'algolib/mmdet/configs' here while `run train.sh` every time. 
