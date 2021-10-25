@@ -48,7 +48,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/mask_rcnn/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     "retinanet_r50_fpn_1x_coco")
@@ -59,7 +59,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/retinanet/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     "ssd300_coco")
@@ -70,7 +70,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/ssd/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     "faster_rcnn_r50_fpn_1x_coco")
@@ -81,7 +81,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/faster_rcnn/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     "retinanet_r50_fpn_fp16_1x_coco")
@@ -92,7 +92,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/fp16/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     "fast_rcnn_r50_fpn_1x_coco")
@@ -103,7 +103,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/fast_rcnn/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     "cascade_mask_rcnn_r50_fpn_1x_coco")
@@ -114,7 +114,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/cascade_rcnn/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     "yolov3_d53_320_273e_coco")
@@ -125,18 +125,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/yolo/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
-    2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
-    ;;
-    "fast_rcnn_r50_fpn_1x_coco")
-set -x
-
-srun -p $1 -n$2 \
-        --gres gpu:$g \
-        --ntasks-per-node $g \
-        --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
-    python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/fast_rcnn/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     "deformable_detr_r50_16x2_50e_coco")
@@ -147,7 +136,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/deformable_detr/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     "grid_rcnn_r50_fpn_gn-head_1x_coco")
@@ -158,7 +147,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/grid_rcnn/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     "point_rend_r50_caffe_fpn_mstrain_1x_coco")
@@ -169,7 +158,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/point_rend/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     "detr_r50_8x2_150e_coco")
@@ -180,7 +169,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/detr/${MODEL_NAME}.py --launcher=slurm \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     "yolact_r50_1x8_coco")
@@ -191,7 +180,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/yolact/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     "centernet_resnet18_dcnv2_140e_coco")
@@ -202,7 +191,7 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/centernet/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+    --work-dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
     *)
