@@ -10,7 +10,11 @@ model = dict(
         norm_cfg=dict(type='BN', requires_grad=True),
         norm_eval=True,
         style='pytorch',
-        init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet50')),
+        init_cfg=dict(
+            type='Pretrained',
+            checkpoint=
+            '/mnt/lustre/share_data/parrots_algolib/Pretrain/mmdet/resnet50-19c8e357.pth'
+        )),
     neck=dict(
         type='FPN',
         in_channels=[256, 512, 1024, 2048],

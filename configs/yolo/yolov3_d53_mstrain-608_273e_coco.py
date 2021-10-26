@@ -6,7 +6,11 @@ model = dict(
         type='Darknet',
         depth=53,
         out_indices=(3, 4, 5),
-        init_cfg=dict(type='Pretrained', checkpoint='open-mmlab://darknet53')),
+        init_cfg=dict(
+            type='Pretrained',
+            checkpoint=
+            '/mnt/lustre/share_data/parrots_algolib/Pretrain/mmdet/yolov3_d53_mstrain-608_273e-a2c3acb8.pth'
+        )),
     neck=dict(
         type='YOLOV3Neck',
         num_scales=3,

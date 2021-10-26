@@ -130,6 +130,9 @@ def train_detector(model,
         if isinstance(runner, EpochBasedRunner):
             runner.register_hook(DistSamplerSeedHook())
 
+    for hook in getattr(torch, '_algolib_hooks', []):
+        runner.register_hook(hook)
+
     # register eval hooks
     if validate:
         # Support batch_size > 1 in validation

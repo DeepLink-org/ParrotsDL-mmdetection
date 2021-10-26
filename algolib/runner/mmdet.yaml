@@ -1,0 +1,30 @@
+global_configs:
+    reader : MemcachedReader 
+    maxstep : 1
+    benchmark: True
+    seed: 2
+    pavi: None 
+
+env_version:
+     pat : pat_latest     #Parrots 0.16.0
+     pyt : pt1.3v1_r0.1
+
+global_model_strategy:
+  dummydataset: None
+  dummydataloader: Parrots
+
+models:
+  - retinanet_r50_fpn_fp16_1x_coco
+  - faster_rcnn_r50_fpn_1x_coco
+  - ssd300_coco
+  - retinanet_r50_fpn_1x_coco
+  - yolov3_d53_320_273e_coco
+  - fast_rcnn_r50_fpn_1x_coco
+  - deformable_detr_r50_16x2_50e_coco
+  - grid_rcnn_r50_fpn_gn-head_1x_coco
+  - cascade_mask_rcnn_r50_fpn_1x_coco
+  - detr_r50_8x2_150e_coco
+  - yolact_r50_1x8_coco
+  - centernet_resnet18_dcnv2_140e_coco
+  - point_rend_r50_caffe_fpn_mstrain_1x_coco
+  - mask_rcnn_r50_fpn_1x_coco

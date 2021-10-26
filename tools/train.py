@@ -21,8 +21,8 @@ from mmdet.utils import collect_env, get_root_logger
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
-    parser.add_argument('config', help='train config file path')
-    parser.add_argument('--work-dir', help='the dir to save logs and models')
+    parser.add_argument('--config', help='train config file path')
+    parser.add_argument('--work_dir', help='the dir to save logs and models')
     parser.add_argument(
         '--resume-from', help='the checkpoint file to resume from')
     parser.add_argument(
@@ -186,4 +186,16 @@ def main():
 
 
 if __name__ == '__main__':
+    # parrots.algolib
+
+    try:
+        from submodules.common import init
+        init(os.path.join(
+            os.path.abspath(__file__).rsplit('/', 1)[0],
+            '../algolib/runner/mmdet.yaml'),
+             hook=True)
+        del init
+    except ImportError:
+        pass
+
     main()
