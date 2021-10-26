@@ -3,7 +3,7 @@ set -x
 
 # 0. build soft link for mm configs
 workdir=$(cd $(dirname $1); pwd)
-if [[ "$workdir" =~ "algolib/mmdet" ]]
+if [[ "$workdir" =~ "submodules/mmdet" ]]
 then 
     if [ -d "$workdir/algolib/configs" ]
     then
@@ -13,12 +13,12 @@ then
         ln -s $workdir/configs $workdir/algolib/
     fi
 else
-    if [ -d "$workdir/algolib/mmdet/algolib/configs" ]
+    if [ -d "$workdir/submodules/mmdet/algolib/configs" ]
     then
-        rm -rf $workdir/algolib/mmdet/algolib/configs
-        ln -s $workdir/algolib/mmdet/configs $workdir/algolib/mmdet/algolib/
+        rm -rf $workdir/submodules/mmdet/algolib/configs
+        ln -s $workdir/submodules/mmdet/configs $workdir/submodules/mmdet/algolib/
     else
-        ln -s $workdir/algolib/mmdet/configs $workdir/algolib/mmdet/algolib/
+        ln -s $workdir/submodules/mmdet/configs $workdir/submodules/mmdet/algolib/
     fi
 fi
 
@@ -30,12 +30,12 @@ now=$(date +"%Y%m%d_%H%M%S")
 
 # 3. set env 
 path=$PWD
-if [[ "$path" =~ "algolib/mmdet" ]]
+if [[ "$path" =~ "submodules/mmdet" ]]
 then 
     pyroot=$path
     comroot=$path/../..
 else
-    pyroot=$path/algolib/mmdet
+    pyroot=$path/submodules/mmdet
     comroot=$path
 fi
 echo $pyroot

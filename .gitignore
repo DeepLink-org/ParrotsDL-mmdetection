@@ -121,4 +121,7 @@ work_dirs/
 *.pth
 *.py~
 *.sh~
+
+# log
 algolib_gen/*
+runs

@@ -1,7 +1,7 @@
 global_configs:
     reader : MemcachedReader 
     maxstep : 1
-    benchmark: 'True'
+    benchmark: True
     seed: 2
     pavi: None 
 
