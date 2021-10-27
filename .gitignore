@@ -124,4 +124,5 @@ work_dirs/
 
 # log
 algolib_gen/*
+algolib/configs
 runs
