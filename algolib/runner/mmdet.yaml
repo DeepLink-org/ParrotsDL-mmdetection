@@ -19,7 +19,6 @@ models:
   - ssd300_coco
   - retinanet_r50_fpn_1x_coco
   - yolov3_d53_320_273e_coco
-  - fast_rcnn_r50_fpn_1x_coco
   - deformable_detr_r50_16x2_50e_coco
   - grid_rcnn_r50_fpn_gn-head_1x_coco
   - cascade_mask_rcnn_r50_fpn_1x_coco
@@ -28,3 +27,4 @@ models:
   - centernet_resnet18_dcnv2_140e_coco
   - point_rend_r50_caffe_fpn_mstrain_1x_coco
   - mask_rcnn_r50_fpn_1x_coco
+  - yolact_r50_8x8_coco
