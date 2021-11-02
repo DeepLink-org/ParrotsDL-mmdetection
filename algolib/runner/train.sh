@@ -44,7 +44,7 @@ export MODEL_NAME=$3
 export FRAME_NAME=mmdet
 CONDA_ROOT=/mnt/cache/share/platform/env/miniconda3.6
 MMCV_PATH=${CONDA_ROOT}/envs/${CONDA_DEFAULT_ENV}/mmcvs
-mmcv_version=1.3.10
+mmcv_version=1.3.12
 export PYTHONPATH=${MMCV_PATH}/${mmcv_version}:$PYTHONPATH
 
 # 4. build necessary parameter
@@ -180,17 +180,6 @@ srun -p $1 -n$2 \
         --ntasks-per-node $g \
         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/detr/${MODEL_NAME}.py --launcher=slurm \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
-    2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
-    ;;
-    "yolact_r50_1x8_coco")
-set -x
-
-srun -p $1 -n$2 \
-        --gres gpu:$g \
-        --ntasks-per-node $g \
-        --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
-    python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/yolact/${MODEL_NAME}.py --launcher=slurm  \
     --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
