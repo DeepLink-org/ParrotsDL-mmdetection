@@ -23,7 +23,6 @@ models:
   - grid_rcnn_r50_fpn_gn-head_1x_coco
   - cascade_mask_rcnn_r50_fpn_1x_coco
   - detr_r50_8x2_150e_coco
-  - yolact_r50_1x8_coco
   - centernet_resnet18_dcnv2_140e_coco
   - point_rend_r50_caffe_fpn_mstrain_1x_coco
   - mask_rcnn_r50_fpn_1x_coco
