@@ -18,8 +18,6 @@ MMCV_PATH=${CONDA_ROOT}/envs/${CONDA_DEFAULT_ENV}/mmcvs
 mmcv_version=1.3.12
 export PYTHONPATH=${MMCV_PATH}/${mmcv_version}:$PYTHONPATH
 
-echo $PYTHONPATH
-
 PYTHONPATH="$(dirname $0)/..":$PYTHONPATH \
 srun -p ${PARTITION} \
     --job-name=${JOB_NAME} \
