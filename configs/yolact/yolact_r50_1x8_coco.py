@@ -17,7 +17,7 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/mnt/lustre/share_data/parrots_algolib/Pretrain/mmdet/yolact_r50_1x8-f38d58df.pth'
+            '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/yolact_r50_1x8-f38d58df.pth'
         )),
     neck=dict(
         type='FPN',
