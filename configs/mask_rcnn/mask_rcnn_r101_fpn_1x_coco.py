@@ -5,5 +5,5 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/mnt/lustre/share_data/parrots_algolib/Pretrain/mmdet/resnet101-5d3b4d8f.pth'
+            '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/resnet101-5d3b4d8f.pth'
         )))

@@ -130,8 +130,6 @@ def train_detector(model,
         if isinstance(runner, EpochBasedRunner):
             runner.register_hook(DistSamplerSeedHook())
 
-    for hook in getattr(torch, '_algolib_hooks', []):
-        runner.register_hook(hook)
 
     # register eval hooks
     if validate:
@@ -169,6 +167,9 @@ def train_detector(model,
             priority = hook_cfg.pop('priority', 'NORMAL')
             hook = build_from_cfg(hook_cfg, HOOKS)
             runner.register_hook(hook, priority=priority)
+
+    for hook in getattr(torch, '_algolib_hooks', []):
+        runner.register_hook(hook, priority='HIGHEST')
 
     if cfg.resume_from:
         runner.resume(cfg.resume_from)
