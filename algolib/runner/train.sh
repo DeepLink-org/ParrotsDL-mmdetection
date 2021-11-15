@@ -41,7 +41,7 @@ fi
 echo $pyroot
 export PYTHONPATH=$comroot:$pyroot:$PYTHONPATH
 export MODEL_NAME=$3
-export FRAME_NAME=mmdet
+export FRAME_NAME=mmdet    #customize for each frame
 
 # mmcv path
 CONDA_ROOT=/mnt/cache/share/platform/env/miniconda3.6
@@ -53,14 +53,13 @@ export PYTHONPATH=${MMCV_PATH}/${mmcv_version}:$PYTHONPATH
 partition=$1  
 name=$3
 MODEL_NAME=$3
-EXTRA_ARGS=${@:4}
 g=$(($2<8?$2:8))
-
-# 5. build optional parameter
+array=( $@ )
+len=${#array[@]}
+EXTRA_ARGS=${array[@]:3:$len}
 SRUN_ARGS=${SRUN_ARGS:-""}
 
-# 6. save log
-# 避免mm系列重复打印
+# 5. model choice
 export PARROTS_DEFAULT_LOGGER=FALSE
 
 case $MODEL_NAME in
