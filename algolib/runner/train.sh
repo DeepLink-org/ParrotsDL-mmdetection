@@ -184,7 +184,7 @@ srun -p $1 -n$2 \
     --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
-    "centernet_resnet18_dcnv2_140e_coco")
+    "centernet_resnet18_140e_coco")
 set -x
 
 srun -p $1 -n$2 \
