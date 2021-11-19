@@ -16,8 +16,7 @@ model = dict(
         style='pytorch',
         init_cfg=dict(
             type='Pretrained',
-            checkpoint=
-            '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/yolact_r50_1x8-f38d58df.pth'
+            checkpoint='/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/resnet50-19c8e357.pth'
         )),
     neck=dict(
         type='FPN',

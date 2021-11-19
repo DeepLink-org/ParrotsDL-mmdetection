@@ -15,7 +15,7 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/deformable_detr_r50_16x2_50e-a12b9512.pth'
+            '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/resnet50-19c8e357.pth'
         )),
     neck=dict(
         type='ChannelMapper',

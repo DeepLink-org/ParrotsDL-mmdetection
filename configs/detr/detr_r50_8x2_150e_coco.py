@@ -15,7 +15,7 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/detr_r50_8x2_150e-2c4b8974.pth'
+            '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/resnet50-19c8e357.pth'
         )),
     bbox_head=dict(
         type='DETRHead',
