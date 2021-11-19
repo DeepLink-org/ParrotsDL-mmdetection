@@ -9,7 +9,7 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/yolov3_d53_mstrain-608_273e-a2c3acb8.pth'
+            '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/darknet53-a628ea1b.pth'
         )),
     neck=dict(
         type='YOLOV3Neck',

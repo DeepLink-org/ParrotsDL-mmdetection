@@ -13,7 +13,7 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/centernet_resnet18_dcnv2_140e-c8cd631f.pth'
+            '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/resnet18-5c106cde.pth.pth'
         )),
     neck=dict(
         type='CTResNetNeck',
