@@ -151,17 +151,18 @@ srun -p $1 -n$2 \
     --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
     ;;
-    "grid_rcnn_r50_fpn_gn-head_1x_coco")
-set -x
+#     "grid_rcnn_r50_fpn_gn-head_1x_coco")
+# set -x
 
-srun -p $1 -n$2 \
-        --gres gpu:$g \
-        --ntasks-per-node $g \
-        --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
-    python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/grid_rcnn/${MODEL_NAME}.py --launcher=slurm  \
-    --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
-    2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
-    ;;
+# srun -p $1 -n$2 \
+#         --gres gpu:$g \
+#         --ntasks-per-node $g \
+#         --job-name=mmdet_${MODEL_NAME} ${SRUN_ARGS}\
+#     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/grid_rcnn/${MODEL_NAME}.py --launcher=slurm  \
+#     --work_dir algolib_gen/${MODEL_NAME} $EXTRA_ARGS \
+#     2>&1 | tee algolib_gen/mmdet/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
+#     ;;
+# 注：grid_rcnn_r50_fpn_gn-head_1x_coco模型存在问题，详见 https://jira.sensetime.com/browse/PARROTSXQ-7589
     "point_rend_r50_caffe_fpn_mstrain_1x_coco")
 set -x
 
