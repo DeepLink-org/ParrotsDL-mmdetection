@@ -9,6 +9,7 @@ from PIL import Image
 from .builder import DATASETS
 from .custom import CustomDataset
 
+from utils import np_int
 
 @DATASETS.register_module()
 class XMLDataset(CustomDataset):
@@ -148,9 +149,9 @@ class XMLDataset(CustomDataset):
             labels_ignore = np.array(labels_ignore)
         ann = dict(
             bboxes=bboxes.astype(np.float32),
-            labels=labels.astype(np.int64),
+            labels=labels.astype(np_int),
             bboxes_ignore=bboxes_ignore.astype(np.float32),
-            labels_ignore=labels_ignore.astype(np.int64))
+            labels_ignore=labels_ignore.astype(np_int))
         return ann
 
     def get_cat_ids(self, idx):

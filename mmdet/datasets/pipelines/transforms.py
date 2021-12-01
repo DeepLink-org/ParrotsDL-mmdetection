@@ -12,7 +12,7 @@ from numpy import random
 from mmdet.core import PolygonMasks
 from mmdet.core.evaluation.bbox_overlaps import bbox_overlaps
 from ..builder import PIPELINES
-
+from utils import np_int
 try:
     from imagecorruptions import corrupt
 except ImportError:
@@ -1502,7 +1502,7 @@ class Albu:
         if 'gt_labels' in results:
             if isinstance(results['gt_labels'], list):
                 results['gt_labels'] = np.array(results['gt_labels'])
-            results['gt_labels'] = results['gt_labels'].astype(np.int64)
+            results['gt_labels'] = results['gt_labels'].astype(np_int)
 
         # back to the original format
         results = self.mapper(results, self.keymap_back)

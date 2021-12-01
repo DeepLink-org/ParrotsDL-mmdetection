@@ -15,7 +15,7 @@ from mmcv.utils import print_log
 
 from .builder import DATASETS
 from .coco import CocoDataset
-
+from utils import np_int
 
 @DATASETS.register_module()
 class CityscapesDataset(CocoDataset):
@@ -86,10 +86,10 @@ class CityscapesDataset(CocoDataset):
 
         if gt_bboxes:
             gt_bboxes = np.array(gt_bboxes, dtype=np.float32)
-            gt_labels = np.array(gt_labels, dtype=np.int64)
+            gt_labels = np.array(gt_labels, dtype=np_int)
         else:
             gt_bboxes = np.zeros((0, 4), dtype=np.float32)
-            gt_labels = np.array([], dtype=np.int64)
+            gt_labels = np.array([], dtype=np_int)
 
         if gt_bboxes_ignore:
             gt_bboxes_ignore = np.array(gt_bboxes_ignore, dtype=np.float32)

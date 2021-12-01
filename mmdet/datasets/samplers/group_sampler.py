@@ -6,6 +6,7 @@ import torch
 from mmcv.runner import get_dist_info
 from torch.utils.data import Sampler
 
+from utils import np_int
 
 class GroupSampler(Sampler):
 
@@ -13,7 +14,7 @@ class GroupSampler(Sampler):
         assert hasattr(dataset, 'flag')
         self.dataset = dataset
         self.samples_per_gpu = samples_per_gpu
-        self.flag = dataset.flag.astype(np.int64)
+        self.flag = dataset.flag.astype(np_int)
         self.group_sizes = np.bincount(self.flag)
         self.num_samples = 0
         for i, size in enumerate(self.group_sizes):
@@ -40,7 +41,7 @@ class GroupSampler(Sampler):
                 range(len(indices) // self.samples_per_gpu))
         ]
         indices = np.concatenate(indices)
-        indices = indices.astype(np.int64).tolist()
+        indices = indices.astype(np_int).tolist()
         assert len(indices) == self.num_samples
         return iter(indices)
 

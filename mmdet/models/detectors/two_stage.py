@@ -5,7 +5,7 @@ import torch
 
 from ..builder import DETECTORS, build_backbone, build_head, build_neck
 from .base import BaseDetector
-
+from utils import use_camb
 
 @DETECTORS.register_module()
 class TwoStageDetector(BaseDetector):
@@ -64,6 +64,8 @@ class TwoStageDetector(BaseDetector):
 
     def extract_feat(self, img):
         """Directly extract features from the backbone+neck."""
+        if use_camb:
+            img = img.contiguous(torch.channels_last)
         x = self.backbone(img)
         if self.with_neck:
             x = self.neck(x)

@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from mmcv.runner import BaseModule, auto_fp16, force_fp32
 from torch.nn.modules.utils import _pair
-
+from utils import int_dtype
 from mmdet.core import build_bbox_coder, multi_apply, multiclass_nms
 from mmdet.models.builder import HEADS, build_loss
 from mmdet.models.losses import accuracy
@@ -161,7 +161,7 @@ class BBoxHead(BaseModule):
         # FG cat_id = [0, num_classes-1]
         labels = pos_bboxes.new_full((num_samples, ),
                                      self.num_classes,
-                                     dtype=torch.long)
+                                     dtype=int_dtype)
         label_weights = pos_bboxes.new_zeros(num_samples)
         bbox_targets = pos_bboxes.new_zeros(num_samples, 4)
         bbox_weights = pos_bboxes.new_zeros(num_samples, 4)
@@ -428,7 +428,7 @@ class BBoxHead(BaseModule):
             >>>                    pos_is_gts, img_metas)
             >>> print(bboxes_list)
         """
-        img_ids = rois[:, 0].long().unique(sorted=True)
+        img_ids = rois[:, 0].to(dtype=int_dtype).unique(sorted=True)
         assert img_ids.numel() <= len(img_metas)
 
         bboxes_list = []
@@ -562,7 +562,7 @@ class BBoxHead(BaseModule):
         else:
             batch_size = scores.shape[0]
             labels = torch.arange(
-                self.num_classes, dtype=torch.long).to(scores.device)
+                self.num_classes, dtype=int_dtype).to(scores.device)
             labels = labels.view(1, 1, -1).expand_as(scores)
             labels = labels.reshape(batch_size, -1)
             scores = scores.reshape(batch_size, -1)

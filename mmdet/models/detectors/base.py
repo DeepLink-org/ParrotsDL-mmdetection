@@ -7,7 +7,7 @@ import numpy as np
 import torch
 import torch.distributed as dist
 from mmcv.runner import BaseModule, auto_fp16
-
+from utils import int_dtype
 from mmdet.core.visualization import imshow_det_bboxes
 
 
@@ -200,7 +200,7 @@ class BaseDetector(BaseModule, metaclass=ABCMeta):
 
         # If the loss_vars has different length, GPUs will wait infinitely
         if dist.is_available() and dist.is_initialized():
-            log_var_length = torch.tensor(len(log_vars), device=loss.device)
+            log_var_length = torch.tensor(len(log_vars), dtype=int_dtype, device=loss.device).int()
             dist.all_reduce(log_var_length)
             message = (f'rank {dist.get_rank()}' +
                        f' len(log_vars): {len(log_vars)}' + ' keys: ' +

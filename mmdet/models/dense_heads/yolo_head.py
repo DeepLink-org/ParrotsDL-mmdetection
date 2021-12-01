@@ -16,7 +16,7 @@ from mmdet.core import (build_assigner, build_bbox_coder,
 from ..builder import HEADS, build_loss
 from .base_dense_head import BaseDenseHead
 from .dense_test_mixins import BBoxTestMixin
-
+from utils import int_dtype
 
 @HEADS.register_module()
 class YOLOV3Head(BaseDenseHead, BBoxTestMixin):
@@ -452,7 +452,7 @@ class YOLOV3Head(BaseDenseHead, BBoxTestMixin):
         for i in range(len(anchors)):
             anchor_strides.append(
                 torch.tensor(self.featmap_strides[i],
-                             device=gt_bboxes.device).repeat(len(anchors[i])))
+                             device=gt_bboxes.device, dtype=int_dtype).repeat(len(anchors[i])))
         concat_anchors = torch.cat(anchors)
         concat_responsible_flags = torch.cat(responsible_flags)
 
@@ -525,7 +525,7 @@ class YOLOV3Head(BaseDenseHead, BBoxTestMixin):
             featmap_sizes, device=device)
         # convert to tensor to keep tracing
         nms_pre_tensor = torch.tensor(
-            cfg.get('nms_pre', -1), device=device, dtype=torch.long)
+            cfg.get('nms_pre', -1), device=device, dtype=int_dtype)
 
         multi_lvl_bboxes = []
         multi_lvl_cls_scores = []
@@ -561,7 +561,7 @@ class YOLOV3Head(BaseDenseHead, BBoxTestMixin):
             if nms_pre > 0:
                 _, topk_inds = conf_pred.topk(nms_pre)
                 batch_inds = torch.arange(batch_size).view(
-                    -1, 1).expand_as(topk_inds).long()
+                    -1, 1).expand_as(topk_inds).do(dtype=int_dtype)
                 # Avoid onnx2tensorrt issue in https://github.com/NVIDIA/TensorRT/issues/1134 # noqa: E501
                 transformed_inds = (
                     bbox_pred.shape[1] * batch_inds + topk_inds)

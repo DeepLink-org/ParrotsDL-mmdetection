@@ -3,6 +3,7 @@ import torch
 
 from mmdet.utils import util_mixins
 
+from utils import int_dtype
 
 class AssignResult(util_mixins.NiceRepr):
     """Stores assignments between predicted and truth boxes.
@@ -133,9 +134,9 @@ class AssignResult(util_mixins.NiceRepr):
 
         if num_gts == 0:
             max_overlaps = torch.zeros(num_preds, dtype=torch.float32)
-            gt_inds = torch.zeros(num_preds, dtype=torch.int64)
+            gt_inds = torch.zeros(num_preds, dtype=int_dtype)
             if p_use_label is True or p_use_label < rng.rand():
-                labels = torch.zeros(num_preds, dtype=torch.int64)
+                labels = torch.zeros(num_preds, dtype=int_dtype)
             else:
                 labels = None
         else:
@@ -159,7 +160,7 @@ class AssignResult(util_mixins.NiceRepr):
             is_ignore = torch.from_numpy(
                 rng.rand(num_preds) < p_ignore) & is_assigned
 
-            gt_inds = torch.zeros(num_preds, dtype=torch.int64)
+            gt_inds = torch.zeros(num_preds, dtype=int_dtype)
 
             true_idxs = np.arange(num_gts)
             rng.shuffle(true_idxs)
@@ -174,7 +175,7 @@ class AssignResult(util_mixins.NiceRepr):
 
             if p_use_label is True or p_use_label < rng.rand():
                 if num_classes == 0:
-                    labels = torch.zeros(num_preds, dtype=torch.int64)
+                    labels = torch.zeros(num_preds, dtype=int_dtype)
                 else:
                     labels = torch.from_numpy(
                         # remind that we set FG labels to [0, num_class-1]
@@ -195,7 +196,7 @@ class AssignResult(util_mixins.NiceRepr):
             gt_labels (torch.Tensor): Labels of gt boxes
         """
         self_inds = torch.arange(
-            1, len(gt_labels) + 1, dtype=torch.long, device=gt_labels.device)
+            1, len(gt_labels) + 1, dtype=int_dtype, device=gt_labels.device)
         self.gt_inds = torch.cat([self_inds, self.gt_inds])
 
         self.max_overlaps = torch.cat(
