@@ -1,4 +1,5 @@
 # model settings
+from utils import checkpoint
 input_size = 300
 model = dict(
     type='SingleStageDetector',
@@ -9,8 +10,7 @@ model = dict(
         ceil_mode=True,
         out_indices=(3, 4),
         out_feature_indices=(22, 34),
-        init_cfg=dict(
-            type='Pretrained', checkpoint='open-mmlab://vgg16_caffe')),
+        init_cfg=dict(type='Pretrained', checkpoint=checkpoint['vgg16'])),
     neck=dict(
         type='SSDNeck',
         in_channels=(512, 1024),

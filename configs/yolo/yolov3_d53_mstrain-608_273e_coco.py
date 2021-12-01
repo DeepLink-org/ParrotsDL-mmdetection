@@ -1,12 +1,13 @@
 _base_ = '../_base_/default_runtime.py'
 # model settings
+from utils import checkpoint, coco_path as data_root
 model = dict(
     type='YOLOV3',
     backbone=dict(
         type='Darknet',
         depth=53,
         out_indices=(3, 4, 5),
-        init_cfg=dict(type='Pretrained', checkpoint='open-mmlab://darknet53')),
+        init_cfg=dict(type='Pretrained', checkpoint=checkpoint['darknet53'])),
     neck=dict(
         type='YOLOV3Neck',
         num_scales=3,
@@ -57,7 +58,6 @@ model = dict(
         max_per_img=100))
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'data/coco/'
 img_norm_cfg = dict(mean=[0, 0, 0], std=[255., 255., 255.], to_rgb=True)
 train_pipeline = [
     dict(type='LoadImageFromFile', to_float32=True),
