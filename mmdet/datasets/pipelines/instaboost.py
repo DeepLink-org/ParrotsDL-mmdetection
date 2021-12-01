@@ -2,7 +2,7 @@
 import numpy as np
 
 from ..builder import PIPELINES
-
+from utils import np_int
 
 @PIPELINES.register_module()
 class InstaBoost:
@@ -89,7 +89,7 @@ class InstaBoost:
             gt_labels.append(ann['category_id'])
             gt_masks_ann.append(ann['segmentation'])
         gt_bboxes = np.array(gt_bboxes, dtype=np.float32)
-        gt_labels = np.array(gt_labels, dtype=np.int64)
+        gt_labels = np.array(gt_labels, dtype=np_int)
         results['ann_info']['labels'] = gt_labels
         results['ann_info']['bboxes'] = gt_bboxes
         results['ann_info']['masks'] = gt_masks_ann

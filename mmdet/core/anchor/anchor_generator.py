@@ -7,7 +7,7 @@ import torch
 from torch.nn.modules.utils import _pair
 
 from .builder import PRIOR_GENERATORS
-
+from utils import use_camb, int_dtype
 
 @PRIOR_GENERATORS.register_module()
 class AnchorGenerator:
@@ -584,8 +584,12 @@ class SSDAnchorGenerator(AnchorGenerator):
                 center=self.centers[i])
             indices = list(range(len(self.ratios[i])))
             indices.insert(1, len(indices))
-            base_anchors = torch.index_select(base_anchors, 0,
-                                              torch.LongTensor(indices))
+            if use_camb and base_anchors.is_cuda:
+                base_anchors = torch.index_select(base_anchors, 0,
+                                                torch.IntTensor(indices))
+            else:
+                base_anchors = torch.index_select(base_anchors, 0,
+                                                torch.LongTensor(indices))
             multi_level_base_anchors.append(base_anchors)
         return multi_level_base_anchors
 
@@ -851,8 +855,8 @@ class YOLOAnchorGenerator(AnchorGenerator):
         feat_h, feat_w = featmap_size
         gt_bboxes_cx = ((gt_bboxes[:, 0] + gt_bboxes[:, 2]) * 0.5).to(device)
         gt_bboxes_cy = ((gt_bboxes[:, 1] + gt_bboxes[:, 3]) * 0.5).to(device)
-        gt_bboxes_grid_x = torch.floor(gt_bboxes_cx / stride[0]).long()
-        gt_bboxes_grid_y = torch.floor(gt_bboxes_cy / stride[1]).long()
+        gt_bboxes_grid_x = torch.floor(gt_bboxes_cx / stride[0]).to(dtype=int_dtype)
+        gt_bboxes_grid_y = torch.floor(gt_bboxes_cy / stride[1]).to(dtype=int_dtype)
 
         # row major indexing
         gt_bboxes_grid_idx = gt_bboxes_grid_y * feat_w + gt_bboxes_grid_x

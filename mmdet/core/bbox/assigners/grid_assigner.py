@@ -5,7 +5,7 @@ from ..builder import BBOX_ASSIGNERS
 from ..iou_calculators import build_iou_calculator
 from .assign_result import AssignResult
 from .base_assigner import BaseAssigner
-
+from utils import int_dtype
 
 @BBOX_ASSIGNERS.register_module()
 class GridAssigner(BaseAssigner):
@@ -77,7 +77,7 @@ class GridAssigner(BaseAssigner):
         # 1. assign -1 by default
         assigned_gt_inds = overlaps.new_full((num_bboxes, ),
                                              -1,
-                                             dtype=torch.long)
+                                             dtype=int_dtype)
 
         if num_gts == 0 or num_bboxes == 0:
             # No ground truth or boxes, return empty assignment
@@ -90,7 +90,7 @@ class GridAssigner(BaseAssigner):
             else:
                 assigned_labels = overlaps.new_full((num_bboxes, ),
                                                     -1,
-                                                    dtype=torch.long)
+                                                    dtype=int_dtype)
             return AssignResult(
                 num_gts,
                 assigned_gt_inds,

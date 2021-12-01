@@ -1,5 +1,5 @@
 import torch
-import np as np
+import numpy as np
 
 use_camb = False
 

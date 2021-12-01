@@ -5,7 +5,7 @@ from ..builder import BBOX_ASSIGNERS
 from ..iou_calculators import build_iou_calculator
 from .assign_result import AssignResult
 from .base_assigner import BaseAssigner
-
+from utils import int_dtype
 
 @BBOX_ASSIGNERS.register_module()
 class MaxIoUAssigner(BaseAssigner):
@@ -141,7 +141,7 @@ class MaxIoUAssigner(BaseAssigner):
         # 1. assign -1 by default
         assigned_gt_inds = overlaps.new_full((num_bboxes, ),
                                              -1,
-                                             dtype=torch.long)
+                                             dtype=int_dtype)
 
         if num_gts == 0 or num_bboxes == 0:
             # No ground truth or boxes, return empty assignment
@@ -154,7 +154,7 @@ class MaxIoUAssigner(BaseAssigner):
             else:
                 assigned_labels = overlaps.new_full((num_bboxes, ),
                                                     -1,
-                                                    dtype=torch.long)
+                                                    dtype=int_dtype)
             return AssignResult(
                 num_gts,
                 assigned_gt_inds,
@@ -200,7 +200,7 @@ class MaxIoUAssigner(BaseAssigner):
                         assigned_gt_inds[gt_argmax_overlaps[i]] = i + 1
 
         if gt_labels is not None:
-            assigned_labels = assigned_gt_inds.new_full((num_bboxes, ), -1)
+            assigned_labels = assigned_gt_inds.new_full((num_bboxes, ), -1, dtype=int_dtype)
             pos_inds = torch.nonzero(
                 assigned_gt_inds > 0, as_tuple=False).squeeze()
             if pos_inds.numel() > 0:

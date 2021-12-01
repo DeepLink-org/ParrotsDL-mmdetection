@@ -14,7 +14,7 @@ from mmdet.core import DistEvalHook, EvalHook
 from mmdet.datasets import (build_dataloader, build_dataset,
                             replace_ImageToTensor)
 from mmdet.utils import get_root_logger
-
+from utils import use_camb
 
 def init_random_seed(seed=None, device='cuda'):
     """Initialize random seed.
@@ -62,7 +62,8 @@ def set_random_seed(seed, deterministic=False):
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
+    if not use_camb:
+        torch.cuda.manual_seed_all(seed)
     if deterministic:
         torch.backends.cudnn.deterministic = True
         torch.backends.cudnn.benchmark = False
@@ -109,6 +110,8 @@ def train_detector(model,
         for ds in dataset
     ]
 
+    if use_camb:
+        model = model.to_memory_format(torch.channels_last)
     # put model on gpus
     if distributed:
         find_unused_parameters = cfg.get('find_unused_parameters', False)

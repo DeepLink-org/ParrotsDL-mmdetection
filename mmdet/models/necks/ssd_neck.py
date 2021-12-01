@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 from mmcv.cnn import ConvModule, DepthwiseSeparableConvModule
 from mmcv.runner import BaseModule
-
+from utils import use_camb
 from ..builder import NECKS
 
 
@@ -123,7 +123,10 @@ class L2Norm(nn.Module):
     def forward(self, x):
         """Forward function."""
         # normalization layer convert to FP32 in FP16 training
-        x_float = x.float()
-        norm = x_float.pow(2).sum(1, keepdim=True).sqrt() + self.eps
-        return (self.weight[None, :, None, None].float().expand_as(x_float) *
+        x_float = x.contiguous().float()
+        norm = x_float.cpu().pow(2).sum(1, keepdim=True).sqrt().cuda() + self.eps
+        res = (self.weight[None, :, None, None].float().contiguous().expand_as(x_float) *
                 x_float / norm).type_as(x)
+        if use_camb:
+            res = res.contiguous(torch.channels_last)
+        return res

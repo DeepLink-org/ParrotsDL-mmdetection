@@ -2,7 +2,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
+from utils import int_dtype
 from ..builder import LOSSES
 from .utils import weight_reduce_loss
 
@@ -158,7 +158,8 @@ def mask_cross_entropy(pred,
     # TODO: handle these two reserved arguments
     assert reduction == 'mean' and avg_factor is None
     num_rois = pred.size()[0]
-    inds = torch.arange(0, num_rois, dtype=torch.long, device=pred.device)
+    pred = pred.contiguous()
+    inds = torch.arange(0, num_rois, dtype=int_dtype, device=pred.device)
     pred_slice = pred[inds, label].squeeze(1)
     return F.binary_cross_entropy_with_logits(
         pred_slice, target, weight=class_weight, reduction='mean')[None]

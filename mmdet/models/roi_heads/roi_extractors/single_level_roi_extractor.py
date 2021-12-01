@@ -4,7 +4,7 @@ from mmcv.runner import force_fp32
 
 from mmdet.models.builder import ROI_EXTRACTORS
 from .base_roi_extractor import BaseRoIExtractor
-
+from utils import int_dtype, use_camb
 
 @ROI_EXTRACTORS.register_module()
 class SingleRoIExtractor(BaseRoIExtractor):
@@ -51,7 +51,7 @@ class SingleRoIExtractor(BaseRoIExtractor):
         scale = torch.sqrt(
             (rois[:, 3] - rois[:, 1]) * (rois[:, 4] - rois[:, 2]))
         target_lvls = torch.floor(torch.log2(scale / self.finest_scale + 1e-6))
-        target_lvls = target_lvls.clamp(min=0, max=num_levels - 1).long()
+        target_lvls = target_lvls.clamp(min=0, max=num_levels - 1).to(dtype=int_dtype)
         return target_lvls
 
     @force_fp32(apply_to=('feats', ), out_fp16=True)
@@ -101,7 +101,7 @@ class SingleRoIExtractor(BaseRoIExtractor):
             if inds.numel() > 0:
                 rois_ = rois[inds]
                 roi_feats_t = self.roi_layers[i](feats[i], rois_)
-                roi_feats[inds] = roi_feats_t
+                roi_feats[inds] = roi_feats_t.contiguous()
             else:
                 # Sometimes some pyramid levels will not be used for RoI
                 # feature extraction and this will cause an incomplete
@@ -111,5 +111,7 @@ class SingleRoIExtractor(BaseRoIExtractor):
                 # included in the computation graph to avoid runtime bugs.
                 roi_feats += sum(
                     x.view(-1)[0]
-                    for x in self.parameters()) * 0. + feats[i].sum() * 0.
+                    for x in self.parameters()) * 0. + feats[i].contiguous().sum() * 0.
+        if use_camb:
+            roi_feats = roi_feats.contiguous(torch.channels_last)
         return roi_feats

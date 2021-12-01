@@ -245,7 +245,7 @@ class SSDHead(AnchorHead):
         """
 
         loss_cls_all = F.cross_entropy(
-            cls_score, labels, reduction='none') * label_weights
+            cls_score.cpu(), labels.cpu().long(), reduction='none').cuda() * label_weights
         # FG cat_id: [0, num_classes -1], BG cat_id: num_classes
         pos_inds = ((labels >= 0) & (labels < self.num_classes)).nonzero(
             as_tuple=False).reshape(-1)
@@ -256,7 +256,7 @@ class SSDHead(AnchorHead):
         num_neg_samples = self.train_cfg.neg_pos_ratio * num_pos_samples
         if num_neg_samples > neg_inds.size(0):
             num_neg_samples = neg_inds.size(0)
-        topk_loss_cls_neg, _ = loss_cls_all[neg_inds].topk(num_neg_samples)
+        topk_loss_cls_neg = loss_cls_all[neg_inds].cpu().topk(num_neg_samples)[0].cuda()
         loss_cls_pos = loss_cls_all[pos_inds].sum()
         loss_cls_neg = topk_loss_cls_neg.sum()
         loss_cls = (loss_cls_pos + loss_cls_neg) / num_total_samples
@@ -268,11 +268,11 @@ class SSDHead(AnchorHead):
             bbox_pred = self.bbox_coder.decode(anchor, bbox_pred)
 
         loss_bbox = smooth_l1_loss(
-            bbox_pred,
-            bbox_targets,
-            bbox_weights,
+            bbox_pred.cpu(),
+            bbox_targets.cpu(),
+            bbox_weights.cpu(),
             beta=self.train_cfg.smoothl1_beta,
-            avg_factor=num_total_samples)
+            avg_factor=num_total_samples).cuda()
         return loss_cls[None], loss_bbox
 
     @force_fp32(apply_to=('cls_scores', 'bbox_preds'))
@@ -301,6 +301,8 @@ class SSDHead(AnchorHead):
         Returns:
             dict[str, Tensor]: A dictionary of loss components.
         """
+        cls_scores = [cls.contiguous() for cls in cls_scores]
+        bbox_preds = [pred.contiguous() for pred in bbox_preds]
         featmap_sizes = [featmap.size()[-2:] for featmap in cls_scores]
         assert len(featmap_sizes) == self.prior_generator.num_levels
 

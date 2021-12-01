@@ -9,7 +9,7 @@ from mmcv.ops import batched_nms
 
 from ..builder import HEADS
 from .anchor_head import AnchorHead
-
+from utils import int_dtype
 
 @HEADS.register_module()
 class RPNHead(AnchorHead):
@@ -180,7 +180,7 @@ class RPNHead(AnchorHead):
             level_ids.append(
                 scores.new_full((scores.size(0), ),
                                 level_idx,
-                                dtype=torch.long))
+                                dtype=int_dtype))
 
         return self._bbox_post_process(mlvl_scores, mlvl_bbox_preds,
                                        mlvl_valid_anchors, level_ids, cfg,
