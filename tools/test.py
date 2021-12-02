@@ -17,7 +17,7 @@ from mmdet.apis import multi_gpu_test, single_gpu_test
 from mmdet.datasets import (build_dataloader, build_dataset,
                             replace_ImageToTensor)
 from mmdet.models import build_detector
-
+from utils import use_camb
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -181,6 +181,8 @@ def main():
     # build the model and load checkpoint
     cfg.model.train_cfg = None
     model = build_detector(cfg.model, test_cfg=cfg.get('test_cfg'))
+    if use_camb:
+        model = model.to_memory_format(torch.channels_last)
     fp16_cfg = cfg.get('fp16', None)
     if fp16_cfg is not None:
         wrap_fp16_model(model)

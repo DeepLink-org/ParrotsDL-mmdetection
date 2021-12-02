@@ -226,7 +226,7 @@ class FCNMaskHead(BaseModule):
             >>> assert sum(list(map(len, encoded_masks))) == N
         """
         if isinstance(mask_pred, torch.Tensor):
-            mask_pred = mask_pred.sigmoid()
+            mask_pred = mask_pred.contiguous().sigmoid()
         else:
             # In AugTest, has been activated before
             mask_pred = det_bboxes.new_tensor(mask_pred)
