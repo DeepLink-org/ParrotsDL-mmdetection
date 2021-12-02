@@ -3,7 +3,7 @@ import torch
 from mmcv.ops.nms import batched_nms
 
 from mmdet.core.bbox.iou_calculators import bbox_overlaps
-
+from utils import int_dtype
 
 def multiclass_nms(multi_bboxes,
                    multi_scores,
@@ -42,7 +42,7 @@ def multiclass_nms(multi_bboxes,
 
     scores = multi_scores[:, :-1]
 
-    labels = torch.arange(num_classes, dtype=torch.long, device=scores.device)
+    labels = torch.arange(num_classes, dtype=int_dtype, device=scores.device)
     labels = labels.view(1, -1).expand_as(scores)
 
     bboxes = bboxes.reshape(-1, 4)

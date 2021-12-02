@@ -268,11 +268,11 @@ class SSDHead(AnchorHead):
             bbox_pred = self.bbox_coder.decode(anchor, bbox_pred)
 
         loss_bbox = smooth_l1_loss(
-            bbox_pred.cpu(),
-            bbox_targets.cpu(),
-            bbox_weights.cpu(),
+            bbox_pred,
+            bbox_targets,
+            bbox_weights,
             beta=self.train_cfg.smoothl1_beta,
-            avg_factor=num_total_samples).cuda()
+            avg_factor=num_total_samples)
         return loss_cls[None], loss_bbox
 
     @force_fp32(apply_to=('cls_scores', 'bbox_preds'))
