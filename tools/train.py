@@ -186,16 +186,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # parrots.algolib
-
-    try:
-        from submodules.common import init
-        init(os.path.join(
-            os.path.abspath(__file__).rsplit('/', 1)[0],
-            '../algolib/runner/mmdet.yaml'),
-             hook=True)
-        del init
-    except ImportError:
-        pass
-
     main()
