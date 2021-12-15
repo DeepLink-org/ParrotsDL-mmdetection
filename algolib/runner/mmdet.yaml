@@ -6,7 +6,7 @@ global_configs:
     pavi: None 
 
 env_version:
-     pat : pat_latest     #Parrots 0.16.0
+     pat : pat_20211111     #Parrots 0.16.0
      pyt : pt1.3v1_r0.1
 
 global_model_strategy:
@@ -26,4 +26,14 @@ models:
   - centernet_resnet18_140e_coco
   - point_rend_r50_caffe_fpn_mstrain_1x_coco
   - mask_rcnn_r50_fpn_1x_coco
-  - yolact_r50_8x8_coco
+  - yolact_r50_8x8_coco  
+  - fcos_center-normbbox-centeronreg-giou_r50_caffe_fpn_gn-head_1x_coco
+  - htc_r50_fpn_1x_coco
+  - panoptic_fpn_r50_fpn_1x_coco
+  - decoupled_solo_r50_fpn_1x_coco
+  # - autoassign_r50_fpn_8x2_1x_coco
+  # autoassign模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7809?filter=-2
+  # - gfl_r50_fpn_1x_coco
+  # gfl模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7810?filter=-2
+  # - yolox_tiny_8x8_300e_coco
+  # yolox模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7812?filter=-2
