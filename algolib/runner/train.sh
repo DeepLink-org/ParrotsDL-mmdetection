@@ -109,7 +109,28 @@ case $MODEL_NAME in
         ;;
     "yolact_r50_8x8_coco")
         FULL_MODEL="yolact/yolact_r50_8x8_coco"
+        ;;    
+    "panoptic_fpn_r50_fpn_1x_coco")
+        FULL_MODEL="panoptic_fpn/panoptic_fpn_r50_fpn_1x_coco"
         ;;
+    "htc_r50_fpn_1x_coco")
+        FULL_MODEL="htc/htc_r50_fpn_1x_coco"
+        ;;
+    "decoupled_solo_r50_fpn_1x_coco")
+        FULL_MODEL="solo/decoupled_solo_r50_fpn_1x_coco"
+        ;;
+    "fcos_center-normbbox-centeronreg-giou_r50_caffe_fpn_gn-head_1x_coco")
+        FULL_MODEL="fcos/fcos_center-normbbox-centeronreg-giou_r50_caffe_fpn_gn-head_1x_coco"
+        ;;
+    # "yolox_tiny_8x8_300e_coco")
+    #    FULL_MODEL="yolox/yolox_tiny_8x8_300e_coco"
+    #    ;;
+    # "gfl_r50_fpn_1x_coco")
+    #    FULL_MODEL="gfl/gfl_r50_fpn_1x_coco"
+    #    ;;
+    # "autoassign_r50_fpn_8x2_1x_coco")
+    #    FULL_MODEL="autoassign/autoassign_r50_fpn_8x2_1x_coco"
+    #    ;;
     *)
        echo "invalid $MODEL_NAME"
        exit 1

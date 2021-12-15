@@ -17,7 +17,7 @@ model = dict(
     test_cfg=dict(score_thr=0.01, nms=dict(type='nms', iou_threshold=0.65)))
 
 # dataset settings
-data_root = 'data/coco/'
+data_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
 dataset_type = 'CocoDataset'
 
 img_norm_cfg = dict(
