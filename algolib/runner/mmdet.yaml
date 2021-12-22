@@ -6,7 +6,7 @@ global_configs:
     pavi: None 
 
 env_version:
-     pat : pat20211216     #Parrots 0.17.0
+     pat : pat20211111     #Parrots 0.16.0
      pyt : pt1.3v1_r0.1
 
 global_model_strategy:
@@ -27,9 +27,10 @@ models:
   - point_rend_r50_caffe_fpn_mstrain_1x_coco
   - mask_rcnn_r50_fpn_1x_coco
   - yolact_r50_8x8_coco  
-  - fcos_center-normbbox-centeronreg-giou_r50_caffe_fpn_gn-head_1x_coco  
-  - panoptic_fpn_r50_fpn_1x_coco
-  - decoupled_solo_r50_fpn_1x_coco
+  - fcos_center-normbbox-centeronreg-giou_r50_caffe_fpn_gn-head_1x_coco 
+  - decoupled_solo_r50_fpn_1x_coco 
+  # - panoptic_fpn_r50_fpn_1x_coco
+  # 该模型在测试精度时在pat20211111环境下会遇到无法分配显存问题，该问题在pat20211216环境中已解决，为了环境一致性，在v0.2版本不添加该模型  
   # - htc_r50_fpn_1x_coco
   # htc模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7865?filter=-2
   # - autoassign_r50_fpn_8x2_1x_coco
