@@ -110,9 +110,10 @@ case $MODEL_NAME in
     "yolact_r50_8x8_coco")
         FULL_MODEL="yolact/yolact_r50_8x8_coco"
         ;;    
-    "panoptic_fpn_r50_fpn_1x_coco")
-        FULL_MODEL="panoptic_fpn/panoptic_fpn_r50_fpn_1x_coco"
-        ;;
+    # "panoptic_fpn_r50_fpn_1x_coco")
+    #     FULL_MODEL="panoptic_fpn/panoptic_fpn_r50_fpn_1x_coco"
+    #     ;;
+    # 该模型在测试精度时在pat20211111环境下会遇到无法分配显存问题，该问题在pat20211216环境中已解决，为了环境一致性，在v0.2版本不添加该模型 
     # "htc_r50_fpn_1x_coco")
     #     FULL_MODEL="htc/htc_r50_fpn_1x_coco"
     #     ;;
