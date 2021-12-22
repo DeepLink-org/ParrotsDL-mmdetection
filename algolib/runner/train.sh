@@ -113,9 +113,10 @@ case $MODEL_NAME in
     "panoptic_fpn_r50_fpn_1x_coco")
         FULL_MODEL="panoptic_fpn/panoptic_fpn_r50_fpn_1x_coco"
         ;;
-    "htc_r50_fpn_1x_coco")
-        FULL_MODEL="htc/htc_r50_fpn_1x_coco"
-        ;;
+    # "htc_r50_fpn_1x_coco")
+    #     FULL_MODEL="htc/htc_r50_fpn_1x_coco"
+    #     ;;
+    # htc模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7865?filter=-2
     "decoupled_solo_r50_fpn_1x_coco")
         FULL_MODEL="solo/decoupled_solo_r50_fpn_1x_coco"
         ;;
@@ -125,12 +126,15 @@ case $MODEL_NAME in
     # "yolox_tiny_8x8_300e_coco")
     #    FULL_MODEL="yolox/yolox_tiny_8x8_300e_coco"
     #    ;;
+    # yolox模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7812?filter=-2
     # "gfl_r50_fpn_1x_coco")
     #    FULL_MODEL="gfl/gfl_r50_fpn_1x_coco"
     #    ;;
+    # gfl模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7810?filter=-2
     # "autoassign_r50_fpn_8x2_1x_coco")
     #    FULL_MODEL="autoassign/autoassign_r50_fpn_8x2_1x_coco"
     #    ;;
+    # autoassign模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7809?filter=-2
     *)
        echo "invalid $MODEL_NAME"
        exit 1
