@@ -404,7 +404,7 @@ def _do_paste_mask(masks, boxes, img_h, img_w, skip_empty=True):
     grid = torch.stack([gx, gy], dim=3)
 
     img_masks = F.grid_sample(
-        masks.to(dtype=torch.float32), grid, align_corners=False)
+        masks.to(dtype=torch.float32).cpu(), grid.cpu(), align_corners=False).cuda()
 
     if skip_empty:
         return img_masks[:, 0], (slice(y0_int, y1_int), slice(x0_int, x1_int))

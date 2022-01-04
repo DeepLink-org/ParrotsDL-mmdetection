@@ -354,8 +354,8 @@ class BitmapMasks(BaseInstanceMasks):
         rois = torch.cat([fake_inds, bboxes], dim=1)  # Nx5
         rois = rois.to(device=device)
         if num_bbox > 0:
-            gt_masks_th = torch.from_numpy(self.masks).index_select(
-                0, inds.cpu().long()).to(device=device, dtype=rois.dtype)
+            gt_masks_th = torch.from_numpy(self.masks).cuda().index_select(
+                0, inds).to(device=device, dtype=rois.dtype)
             targets = roi_align(gt_masks_th[:, None, :, :], rois, out_shape,
                                 1.0, 0, 'avg', True).contiguous().squeeze(1)
             if binarize:

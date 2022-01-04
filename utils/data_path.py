@@ -28,7 +28,7 @@ else:
 
 checkpoint = dict(
     resnet50=pretrain_path + "resnet50-19c8e357.pth",
-    resnet101=pretrain_path + "resnet101_caffe-3ad79236.pth",
+    resnet101=pretrain_path + "resnet101-5d3b4d8f.pth",
     darknet53=pretrain_path + "darknet53-a628ea1b.pth",
     vgg16=pretrain_path + "vgg16_caffe-292e1171.pth",
 )
