@@ -15,13 +15,8 @@ global_model_strategy:
   dummydataloader: Parrots
 
 models:
-  - retinanet_r50_fpn_fp16_1x_coco:
-      seed: None  # for test
-      pavi: None  # for test
-      model_strategy: # for test
-        dummydataset: Parrots,Pytorch
-  - faster_rcnn_r50_fpn_1x_coco:
-      mmcv:
+  - retinanet_r50_fpn_fp16_1x_coco
+  - faster_rcnn_r50_fpn_1x_coco
   - ssd300_coco
   - retinanet_r50_fpn_1x_coco
   - yolov3_d53_320_273e_coco
