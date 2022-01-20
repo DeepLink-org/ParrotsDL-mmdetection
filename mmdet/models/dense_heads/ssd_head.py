@@ -245,7 +245,7 @@ class SSDHead(AnchorHead):
         """
 
         loss_cls_all = F.cross_entropy(
-            cls_score.cpu(), labels.cpu().long(), reduction='none').cuda() * label_weights
+            cls_score, labels, reduction='none') * label_weights
         # FG cat_id: [0, num_classes -1], BG cat_id: num_classes
         pos_inds = ((labels >= 0) & (labels < self.num_classes)).nonzero(
             as_tuple=False).reshape(-1)
@@ -256,7 +256,7 @@ class SSDHead(AnchorHead):
         num_neg_samples = self.train_cfg.neg_pos_ratio * num_pos_samples
         if num_neg_samples > neg_inds.size(0):
             num_neg_samples = neg_inds.size(0)
-        topk_loss_cls_neg = loss_cls_all[neg_inds].cpu().topk(num_neg_samples)[0].cuda()
+        topk_loss_cls_neg = loss_cls_all[neg_inds].topk(num_neg_samples)[0]
         loss_cls_pos = loss_cls_all[pos_inds].sum()
         loss_cls_neg = topk_loss_cls_neg.sum()
         loss_cls = (loss_cls_pos + loss_cls_neg) / num_total_samples

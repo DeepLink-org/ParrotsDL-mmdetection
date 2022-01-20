@@ -230,10 +230,10 @@ def bbox_overlaps(bboxes1, bboxes2, mode='iou', is_aligned=False, eps=1e-6):
             enclosed_lt = torch.min(bboxes1[..., :2], bboxes2[..., :2])
             enclosed_rb = torch.max(bboxes1[..., 2:], bboxes2[..., 2:])
     else:
-        lt = torch.max(bboxes1[..., :, None, :2],
-                       bboxes2[..., None, :, :2])  # [B, rows, cols, 2]
-        rb = torch.min(bboxes1[..., :, None, 2:],
-                       bboxes2[..., None, :, 2:])  # [B, rows, cols, 2]
+        lt = torch.max(bboxes1[..., :, None, :2].contiguous(),
+                       bboxes2[..., None, :, :2].contiguous())  # [B, rows, cols, 2]
+        rb = torch.min(bboxes1[..., :, None, 2:].contiguous(),
+                       bboxes2[..., None, :, 2:].contiguous())  # [B, rows, cols, 2]
 
         wh = fp16_clamp(rb - lt, min=0)
         overlap = wh[..., 0] * wh[..., 1]
