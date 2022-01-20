@@ -231,8 +231,8 @@ def delta2bbox(rois,
     stds = deltas.new_tensor(stds).view(1, -1)
     denorm_deltas = deltas * stds + means
 
-    dxy = denorm_deltas[:, :2]
-    dwh = denorm_deltas[:, 2:]
+    dxy = denorm_deltas[:, :2].contiguous()
+    dwh = denorm_deltas[:, 2:].contiguous()
 
     # Compute width/height of each roi
     rois_ = rois.repeat(1, num_classes).reshape(-1, 4)
