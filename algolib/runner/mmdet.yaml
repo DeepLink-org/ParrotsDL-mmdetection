@@ -7,7 +7,7 @@ global_configs:
 
 env_version:
      pat : pat20211111     #Parrots 0.16.0
-     pyt : pt1.3v1_r0.1
+     pyt : pt1.3v1_r0.1 
 
 global_model_strategy:
   dummydataset: None
