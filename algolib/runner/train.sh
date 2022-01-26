@@ -45,15 +45,6 @@ export PYTHONPATH=$comroot:$pyroot:$PYTHONPATH
 export MODEL_NAME=$3
 export FRAME_NAME=mmdet    #customize for each frame
 
-# mmcv path
-version_p=$(python -c 'import sys; print(sys.version_info[:])')
-CONDA_ROOT=/mnt/cache/share/platform/env/miniconda3.${version_p:4:1}
-# MMCV_PATH=/mnt/cache/share/platform/env/miniconda3.6/envs/pat20220106/mmcvs
-# mmcv_version=1.4.2
-# export PYTHONPATH=${MMCV_PATH}/${mmcv_version}:$PYTHONPATH
-export PYTHONPATH=/mnt/lustre/lijinze/mmcvljz1/mmcv142:$PYTHONPATH
-export MMCV_HOME=/mnt/lustre/share_data/parrots_algolib/datasets/pretrain/mmcv
-
 # init_path
 export PYTHONPATH=$init_path/common/sites/:$PYTHONPATH # necessary for init
 
@@ -63,23 +54,9 @@ name=$3
 MODEL_NAME=$3
 g=$(($2<8?$2:8))
 array=( $@ )
-len=${#array[@]}
-
-for i in $(seq 0 $(($#-1)))
-    do
-    if [[ ${array[$i]} == '--resume' ]]
-        then
-            resume=${array[$i]}
-            checkpoints_path=${array[$(($i+1))]}
-            unset array[$i]
-            unset array[$(($i+1))]
-    fi    
-    done
-
+EXTRA_ARGS=${array[@]:3}
+EXTRA_ARGS=${EXTRA_ARGS//--resume/--resume-from}
 SRUN_ARGS=${SRUN_ARGS:-""}
-
-
-EXTRA_ARGS=${array[@]:3:$len}
 
 # 5. model choice
 export PARROTS_DEFAULT_LOGGER=FALSE
@@ -126,8 +103,6 @@ case $MODEL_NAME in
         FULL_MODEL="yolact/yolact_r50_8x8_coco"
         ;;    
     "panoptic_fpn_r50_fpn_1x_coco")
-        FULL_MODEL="panoptic_fpn/panoptic_fpn_r50_fpn_1x_coco"
-        ;;
     # "htc_r50_fpn_1x_coco")
     #     FULL_MODEL="htc/htc_r50_fpn_1x_coco"
     #     ;;
@@ -163,23 +138,10 @@ set -x
 file_model=${FULL_MODEL##*/}
 folder_model=${FULL_MODEL%/*}
 
-
-if [ $resume == '--resume' ]
-    then
-        srun -p $1 -n$2\
-            --gres gpu:$g \
-            --ntasks-per-node $g \
-            --job-name=${FRAME_NAME}_${MODEL_NAME} ${SRUN_ARGS}\
-            python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/$folder_model/$file_model.py --launcher=slurm  \
-            --work_dir algolib_gen/${FRAME_NAME}/${MODEL_NAME} --options dist_params.port=$port $EXTRA_ARGS \
-            --resume-from $resume_path \
-            2>&1 | tee algolib_gen/${FRAME_NAME}/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
-else
-   srun -p $1 -n$2 -w SH-IDC1-10-198-4-48\
-            --gres gpu:$g \
-            --ntasks-per-node $g \
-            --job-name=${FRAME_NAME}_${MODEL_NAME} ${SRUN_ARGS}\
-        python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/$folder_model/$file_model.py --launcher=slurm  \
-        --work_dir algolib_gen/${FRAME_NAME}/${MODEL_NAME} --options dist_params.port=$port $EXTRA_ARGS \
-        2>&1 | tee algolib_gen/${FRAME_NAME}/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
-fi
+srun -p $1 -n$2\
+        --gres gpu:$g \
+        --ntasks-per-node $g \
+        --job-name=${FRAME_NAME}_${MODEL_NAME} ${SRUN_ARGS}\
+    python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/$folder_model/$file_model.py --launcher=slurm  \
+    --work_dir algolib_gen/${FRAME_NAME}/${MODEL_NAME} --options dist_params.port=$port $EXTRA_ARGS \
+    2>&1 | tee algolib_gen/${FRAME_NAME}/${MODEL_NAME}/train.${MODEL_NAME}.log.$now
