@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div align="center">
   <img src="resources/mmdet-logo.png" width="600"/>
 
@@ -211,3 +212,7 @@ If you use this toolbox or benchmark in your research, please cite this project.
 - [MMHuman3D](https://github.com/open-mmlab/mmhuman3d): OpenMMLab 3D human parametric model toolbox and benchmark.
 - [MMSelfSup](https://github.com/open-mmlab/mmselfsup): OpenMMLab self-supervised learning toolbox and benchmark.
 - [MMRazor](https://github.com/open-mmlab/mmrazor): OpenMMLab Model Compression Toolbox and Benchmark.
+=======
+# mmdetection
+
+>>>>>>> 8eeab0956a88bb2bfcfd6973c1957b34b8f1c1a8
