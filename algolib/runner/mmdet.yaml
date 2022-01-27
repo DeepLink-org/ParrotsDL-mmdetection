@@ -6,8 +6,9 @@ global_configs:
     pavi: None 
 
 env_version:
-     pat : pat20211111     #Parrots 0.16.0
+     pat : 0.16     #Parrots 0.16.0
      pyt : pt1.3v1_r0.1
+     mmcv: 1.3.12
 
 global_model_strategy:
   dummydataset: None
