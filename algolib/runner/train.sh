@@ -103,6 +103,8 @@ case $MODEL_NAME in
         FULL_MODEL="yolact/yolact_r50_8x8_coco"
         ;;    
     "panoptic_fpn_r50_fpn_1x_coco")
+        FULL_MODEL="panoptic_fpn/panoptic_fpn_r50_fpn_1x_coco"
+        ;;
     # "htc_r50_fpn_1x_coco")
     #     FULL_MODEL="htc/htc_r50_fpn_1x_coco"
     #     ;;
