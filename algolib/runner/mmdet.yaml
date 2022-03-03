@@ -30,8 +30,7 @@ models:
   - fcos_center-normbbox-centeronreg-giou_r50_caffe_fpn_gn-head_1x_coco 
   - decoupled_solo_r50_fpn_1x_coco 
   - panoptic_fpn_r50_fpn_1x_coco
-  # - grid_rcnn_r50_fpn_gn-head_1x_coco
-  # 注：grid_rcnn_r50_fpn_gn-head_1x_coco模型存在问题，详见 https://jira.sensetime.com/browse/PARROTSXQ-7589
+  - grid_rcnn_r50_fpn_gn-head_2x_coco
   # - htc_r50_fpn_1x_coco
   # htc模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7865?filter=-2
   # - autoassign_r50_fpn_8x2_1x_coco

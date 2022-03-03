@@ -86,10 +86,9 @@ case $MODEL_NAME in
     "deformable_detr_r50_16x2_50e_coco")
         FULL_MODEL="deformable_detr/deformable_detr_r50_16x2_50e_coco"
         ;;
-    # "grid_rcnn_r50_fpn_gn-head_1x_coco")
-    #     FULL_MODEL="grid_rcnn/grid_rcnn_r50_fpn_gn-head_1x_coco"
-    #     ;;
-    # 注：grid_rcnn_r50_fpn_gn-head_1x_coco模型存在问题，详见 https://jira.sensetime.com/browse/PARROTSXQ-7589
+    "grid_rcnn_r50_fpn_gn-head_2x_coco")
+        FULL_MODEL="grid_rcnn/grid_rcnn_r50_fpn_gn-head_2x_coco"
+        ;;
     "point_rend_r50_caffe_fpn_mstrain_1x_coco")
         FULL_MODEL="point_rend/point_rend_r50_caffe_fpn_mstrain_1x_coco"
         ;;
