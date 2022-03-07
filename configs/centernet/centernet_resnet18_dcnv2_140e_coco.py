@@ -36,8 +36,18 @@ model = dict(
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 
+file_client_args = dict(
+    backend='petrel',
+    path_mapping=dict({
+        './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
+    }))
+imge_root = './data'
+
+# file_client_args = dict(backend='disk')
+# imge_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/mmlab_coco/'
+
 train_pipeline = [
-    dict(type='LoadImageFromFile', to_float32=True, color_type='color'),
+    dict(type='LoadImageFromFile', to_float32=True, color_type='color', file_client_args=file_client_args),
     dict(type='LoadAnnotations', with_bbox=True),
     dict(
         type='PhotoMetricDistortion',
@@ -60,7 +70,7 @@ train_pipeline = [
     dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels'])
 ]
 test_pipeline = [
-    dict(type='LoadImageFromFile', to_float32=True),
+    dict(type='LoadImageFromFile', to_float32=True, file_client_args=file_client_args),
     dict(
         type='MultiScaleFlipAug',
         scale_factor=1.0,
@@ -103,7 +113,7 @@ data = dict(
         dataset=dict(
             type=dataset_type,
             ann_file=data_root + 'annotations/instances_train2017.json',
-            img_prefix=data_root + 'train2017/',
+            img_prefix=imge_root + 'train2017/',
             pipeline=train_pipeline)),
     val=dict(pipeline=test_pipeline),
     test=dict(pipeline=test_pipeline))

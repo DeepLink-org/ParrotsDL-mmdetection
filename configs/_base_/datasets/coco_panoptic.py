@@ -1,10 +1,21 @@
 # dataset settings
+
+file_client_args = dict(
+    backend='petrel',
+    path_mapping=dict({
+        './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
+    }))
+imge_root = './data'
+
+# file_client_args = dict(backend='disk')
+# imge_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
+
 dataset_type = 'CocoPanopticDataset'
 data_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 train_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromFile', file_client_args=file_client_args),
     dict(
         type='LoadPanopticAnnotations',
         with_bbox=True,
@@ -21,7 +32,7 @@ train_pipeline = [
         keys=['img', 'gt_bboxes', 'gt_labels', 'gt_masks', 'gt_semantic_seg']),
 ]
 test_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromFile', file_client_args=file_client_args),
     dict(
         type='MultiScaleFlipAug',
         img_scale=(1333, 800),
@@ -41,19 +52,19 @@ data = dict(
     train=dict(
         type=dataset_type,
         ann_file=data_root + 'annotations/panoptic_train2017.json',
-        img_prefix=data_root + 'train2017/',
+        img_prefix=imge_root + 'train2017/',
         seg_prefix=data_root + 'annotations/panoptic_train2017/',
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
         ann_file=data_root + 'annotations/panoptic_val2017.json',
-        img_prefix=data_root + 'val2017/',
+        img_prefix=imge_root + 'val2017/',
         seg_prefix=data_root + 'annotations/panoptic_val2017/',
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
         ann_file=data_root + 'annotations/panoptic_val2017.json',
-        img_prefix=data_root + 'val2017/',
+        img_prefix=imge_root + 'val2017/',
         seg_prefix=data_root + 'annotations/panoptic_val2017/',
         pipeline=test_pipeline))
 evaluation = dict(interval=1, metric=['PQ'])
