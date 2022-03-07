@@ -88,12 +88,23 @@ model = dict(
         top_k=200,
         max_per_img=100))
 # dataset settings
+
+file_client_args = dict(
+    backend='petrel',
+    path_mapping=dict({
+        './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
+    }))
+imge_root = './data'
+
+# file_client_args = dict(backend='disk')
+# imge_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
+
 dataset_type = 'CocoDataset'
 data_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
 img_norm_cfg = dict(
     mean=[123.68, 116.78, 103.94], std=[58.40, 57.12, 57.38], to_rgb=True)
 train_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromFile', file_client_args=file_client_args),
     dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
     dict(type='FilterAnnotations', min_gt_bbox_wh=(4.0, 4.0)),
     dict(
@@ -118,7 +129,7 @@ train_pipeline = [
     dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels', 'gt_masks']),
 ]
 test_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromFile', file_client_args=file_client_args),
     dict(
         type='MultiScaleFlipAug',
         img_scale=(img_size, img_size),
@@ -136,17 +147,17 @@ data = dict(
     train=dict(
         type=dataset_type,
         ann_file=data_root + 'annotations/instances_train2017.json',
-        img_prefix=data_root + 'train2017/',
+        img_prefix=imge_root + 'train2017/',
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
         ann_file=data_root + 'annotations/instances_val2017.json',
-        img_prefix=data_root + 'val2017/',
+        img_prefix=imge_root + 'val2017/',
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
         ann_file=data_root + 'annotations/instances_val2017.json',
-        img_prefix=data_root + 'val2017/',
+        img_prefix=imge_root + 'val2017/',
         pipeline=test_pipeline))
 # optimizer
 optimizer = dict(type='SGD', lr=1e-3, momentum=0.9, weight_decay=5e-4)

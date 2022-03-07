@@ -60,11 +60,22 @@ model = dict(
         nms=dict(type='nms', iou_threshold=0.45),
         max_per_img=100))
 # dataset settings
+
+file_client_args = dict(
+    backend='petrel',
+    path_mapping=dict({
+        './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
+    }))
+imge_root = './data'
+
+# file_client_args = dict(backend='disk')
+# imge_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
+
 dataset_type = 'CocoDataset'
 data_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
 img_norm_cfg = dict(mean=[0, 0, 0], std=[255., 255., 255.], to_rgb=True)
 train_pipeline = [
-    dict(type='LoadImageFromFile', to_float32=True),
+    dict(type='LoadImageFromFile', to_float32=True, file_client_args=file_client_args),
     dict(type='LoadAnnotations', with_bbox=True),
     dict(
         type='Expand',
@@ -84,7 +95,7 @@ train_pipeline = [
     dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels'])
 ]
 test_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromFile', file_client_args=file_client_args),
     dict(
         type='MultiScaleFlipAug',
         img_scale=(608, 608),
@@ -104,17 +115,17 @@ data = dict(
     train=dict(
         type=dataset_type,
         ann_file=data_root + 'annotations/instances_train2017.json',
-        img_prefix=data_root + 'train2017/',
+        img_prefix=imge_root + 'train2017/',
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
         ann_file=data_root + 'annotations/instances_val2017.json',
-        img_prefix=data_root + 'val2017/',
+        img_prefix=imge_root + 'val2017/',
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
         ann_file=data_root + 'annotations/instances_val2017.json',
-        img_prefix=data_root + 'val2017/',
+        img_prefix=imge_root + 'val2017/',
         pipeline=test_pipeline))
 # optimizer
 optimizer = dict(type='SGD', lr=0.001, momentum=0.9, weight_decay=0.0005)

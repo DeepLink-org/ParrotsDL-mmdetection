@@ -76,8 +76,17 @@ img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 # train_pipeline, NOTE the img_scale and the Pad's size_divisor is different
 # from the default setting in mmdet.
+
+file_client_args = dict(
+    backend='petrel',
+    path_mapping=dict({
+        './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
+    }))
+
+# file_client_args = dict(backend='disk')
+
 train_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromFile', file_client_args=file_client_args),
     dict(type='LoadAnnotations', with_bbox=True),
     dict(type='RandomFlip', flip_ratio=0.5),
     dict(
@@ -121,7 +130,7 @@ train_pipeline = [
 # setting (size_divisor=32). While there is little effect on the performance
 # whether we use the default setting or use size_divisor=1.
 test_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromFile', file_client_args=file_client_args),
     dict(
         type='MultiScaleFlipAug',
         img_scale=(1333, 800),
