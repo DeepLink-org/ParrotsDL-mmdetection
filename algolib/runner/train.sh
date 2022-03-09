@@ -118,10 +118,9 @@ case $MODEL_NAME in
     #    FULL_MODEL="yolox/yolox_tiny_8x8_300e_coco"
     #    ;;
     # yolox模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7812?filter=-2
-    # "gfl_r50_fpn_1x_coco")
-    #    FULL_MODEL="gfl/gfl_r50_fpn_1x_coco"
-    #    ;;
-    # gfl模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7810?filter=-2
+    "gfl_r50_fpn_1x_coco")
+        FULL_MODEL="gfl/gfl_r50_fpn_1x_coco"
+        ;;
     # "autoassign_r50_fpn_8x2_1x_coco")
     #    FULL_MODEL="autoassign/autoassign_r50_fpn_8x2_1x_coco"
     #    ;;
