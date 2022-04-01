@@ -9,7 +9,7 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/darknet53-a628ea1b.pth'
+            '/mnt/lustre/share_data/PAT/datasets/mmdet/pretrain/darknet53-a628ea1b.pth'
         )),
     neck=dict(
         type='YOLOV3Neck',
@@ -69,10 +69,10 @@ file_client_args = dict(
 imge_root = './data'
 
 # file_client_args = dict(backend='disk')
-# imge_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
+# imge_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
 
 dataset_type = 'CocoDataset'
-data_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
+data_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
 img_norm_cfg = dict(mean=[0, 0, 0], std=[255., 255., 255.], to_rgb=True)
 train_pipeline = [
     dict(type='LoadImageFromFile', to_float32=True, file_client_args=file_client_args),

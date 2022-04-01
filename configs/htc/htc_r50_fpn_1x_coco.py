@@ -25,7 +25,7 @@ file_client_args = dict(
 
 # file_client_args = dict(backend='disk')
 
-data_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/mmlab_coco/'
+data_root = '/mnt/lustre/share_data/PAT/datasets/mmdet/mmlab_coco/'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 train_pipeline = [

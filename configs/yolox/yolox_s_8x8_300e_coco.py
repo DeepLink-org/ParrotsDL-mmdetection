@@ -31,9 +31,9 @@ file_client_args = dict(
 imge_root = './data'
 
 # file_client_args = dict(backend='disk')
-# imge_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
+# imge_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
 
-data_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
+data_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
 dataset_type = 'CocoDataset'
 
 train_pipeline = [

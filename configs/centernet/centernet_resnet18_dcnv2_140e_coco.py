@@ -13,7 +13,7 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/resnet18-5c106cde.pth'
+            '/mnt/lustre/share_data/PAT/datasets/mmdet/pretrain/resnet18-5c106cde.pth'
         )),
     neck=dict(
         type='CTResNetNeck',
@@ -44,7 +44,7 @@ file_client_args = dict(
 imge_root = './data'
 
 # file_client_args = dict(backend='disk')
-# imge_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/mmlab_coco/'
+# imge_root = '/mnt/lustre/share_data/PAT/datasets/mmdet/mmlab_coco/'
 
 train_pipeline = [
     dict(type='LoadImageFromFile', to_float32=True, color_type='color', file_client_args=file_client_args),
@@ -100,7 +100,7 @@ test_pipeline = [
 ]
 
 dataset_type = 'CocoDataset'
-data_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
+data_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
 
 # Use RepeatDataset to speed up training
 data = dict(

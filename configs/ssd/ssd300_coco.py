@@ -12,10 +12,10 @@ file_client_args = dict(
 imge_root = './data'
 
 # file_client_args = dict(backend='disk')
-# imge_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
+# imge_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
 
 dataset_type = 'CocoDataset'
-data_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
+data_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
 img_norm_cfg = dict(mean=[123.675, 116.28, 103.53], std=[1, 1, 1], to_rgb=True)
 train_pipeline = [
     dict(type='LoadImageFromFile', file_client_args=file_client_args),

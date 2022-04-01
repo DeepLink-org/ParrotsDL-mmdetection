@@ -16,7 +16,7 @@ model = dict(
         style='pytorch',
         init_cfg=dict(
             type='Pretrained',
-            checkpoint='/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/resnet50-19c8e357.pth'
+            checkpoint='/mnt/lustre/share_data/PAT/datasets/mmdet/pretrain/resnet50-19c8e357.pth'
         )),
     neck=dict(
         type='FPN',
@@ -97,10 +97,10 @@ file_client_args = dict(
 imge_root = './data'
 
 # file_client_args = dict(backend='disk')
-# imge_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
+# imge_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
 
 dataset_type = 'CocoDataset'
-data_root = '/mnt/lustre/share_data/parrots_algolib/datasets/mscoco2017/'
+data_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
 img_norm_cfg = dict(
     mean=[123.68, 116.78, 103.94], std=[58.40, 57.12, 57.38], to_rgb=True)
 train_pipeline = [
