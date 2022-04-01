@@ -13,7 +13,7 @@ model = dict(
         norm_cfg=dict(type='BN', requires_grad=True),
         norm_eval=True,
         style='pytorch',
-        init_cfg=dict(type='Pretrained', checkpoint='/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/convert_from_pt16_to_pt13_resnet50.pth')),
+        init_cfg=dict(type='Pretrained', checkpoint='/mnt/lustre/share_data/PAT/datasets/mmdet/pretrain/convert_from_pt16_to_pt13_resnet50.pth')),
     neck=dict(
         type='FPN',
         in_channels=[256, 512, 1024, 2048],

@@ -12,7 +12,7 @@ model = dict(
         num_stages=4,
         out_indices=(0, 1, 2, 3),
         frozen_stages=1,
-        init_cfg=dict(type='Pretrained', checkpoint='/mnt/lustre/share_data/parrots_algolib/datasets/mmdet/pretrain/convert_from_pt16_to_pt13_resnet50.pth'),
+        init_cfg=dict(type='Pretrained', checkpoint='/mnt/lustre/share_data/PAT/datasets/mmdet/pretrain/convert_from_pt16_to_pt13_resnet50.pth'),
         style='pytorch'),
     neck=dict(
         type='FPN',
