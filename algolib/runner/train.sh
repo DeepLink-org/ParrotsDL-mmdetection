@@ -104,10 +104,9 @@ case $MODEL_NAME in
     "panoptic_fpn_r50_fpn_1x_coco")
         FULL_MODEL="panoptic_fpn/panoptic_fpn_r50_fpn_1x_coco"
         ;;
-    # "htc_r50_fpn_1x_coco")
-    #     FULL_MODEL="htc/htc_r50_fpn_1x_coco"
-    #     ;;
-    # htc模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7865?filter=-2
+     "htc_r50_fpn_1x_coco")
+         FULL_MODEL="htc/htc_r50_fpn_1x_coco"
+         ;;
     "decoupled_solo_r50_fpn_1x_coco")
         FULL_MODEL="solo/decoupled_solo_r50_fpn_1x_coco"
         ;;

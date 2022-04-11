@@ -32,8 +32,7 @@ models:
   - panoptic_fpn_r50_fpn_1x_coco
   - grid_rcnn_r50_fpn_gn-head_2x_coco
   - gfl_r50_fpn_1x_coco
-  # - htc_r50_fpn_1x_coco
-  # htc模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7865?filter=-2
+  - htc_r50_fpn_1x_coco
   # - autoassign_r50_fpn_8x2_1x_coco
   # autoassign模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7809?filter=-2
   # - yolox_tiny_8x8_300e_coco
