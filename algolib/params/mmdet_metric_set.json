@@ -1,0 +1,32 @@
+{
+    "yolact_r50_8x8_coco": {
+        "rate": [
+            0.02,
+            0.55
+        ]
+    },
+    "centernet_resnet18_140e_coco": {
+        "rate": [
+            0.01,
+            0.4
+        ]
+    },
+    "faster_rcnn_r50_fpn_1x_coco": {
+        "rate": [
+            0.01,
+            0.01
+        ]
+    },
+    "panoptic_fpn_r50_fpn_1x_coco": {
+        "rate": [
+            0.01,
+            0.01
+        ]
+    },
+    "yolov3_d53_320_273e_coco": {
+        "rate": [
+            0.01,
+            0.6
+        ]
+    }
+}
