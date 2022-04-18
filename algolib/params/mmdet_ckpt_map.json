@@ -1,0 +1,53 @@
+{
+    "cascade_mask_rcnn_r50_fpn_1x_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/cascade_mask_rcnn_r50_fpn_1x_coco/epoch_12.pth"
+    },
+    "panoptic_fpn_r50_fpn_1x_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/panoptic_fpn_r50_fpn_1x_coco/epoch_12.pth"
+    },
+    "yolact_r50_8x8_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/yolact_r50_8x8_coco/epoch_55.pth"
+    },
+    "detr_r50_8x2_150e_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/detr_r50_8x2_150e_coco/epoch_150.pth"
+    },
+    "retinanet_r50_fpn_1x_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/retinanet_r50_fpn_1x_coco/epoch_12.pth"
+    },
+    "gfl_r50_fpn_1x_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/gfl_r50_fpn_1x_coco/epoch_12.pth"
+    },
+    "ssd300_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/ssd300_coco/epoch_24.pth"
+    },
+    "mask_rcnn_r50_fpn_1x_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/mask_rcnn_r50_fpn_1x_coco/epoch_12.pth"
+    },
+    "retinanet_r50_fpn_fp16_1x_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/retinanet_r50_fpn_fp16_1x_coco/epoch_12.pth"
+    },
+    "yolov3_d53_320_273e_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/yolov3_d53_320_273e_coco/epoch_273.pth"
+    },
+    "faster_rcnn_r50_fpn_1x_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/faster_rcnn_r50_fpn_1x_coco/epoch_12.pth"
+    },
+    "decoupled_solo_r50_fpn_1x_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/decoupled_solo_r50_fpn_1x_coco/epoch_12.pth"
+    },
+    "fcos_center-normbbox-centeronreg-giou_r50_caffe_fpn_gn-head_1x_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/fcos_center-normbbox-centeronreg-giou_r50_caffe_fpn_gn-head_1x_coco/epoch_12.pth"
+    },
+    "grid_rcnn_r50_fpn_gn-head_2x_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/grid_rcnn_r50_fpn_gn-head_2x_coco/epoch_25.pth"
+    },
+    "point_rend_r50_caffe_fpn_mstrain_1x_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/point_rend_r50_caffe_fpn_mstrain_1x_coco/epoch_12.pth"
+    },
+    "centernet_resnet18_140e_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/centernet_resnet18_140e_coco/epoch_28.pth"
+    },
+    "deformable_detr_r50_16x2_50e_coco": {
+        "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/deformable_detr_r50_16x2_50e_coco/epoch_50.pth"
+    }
+}
