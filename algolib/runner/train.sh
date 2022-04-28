@@ -1,54 +1,50 @@
 #!/bin/bash
 set -x
+ 
+if $SMART_ROOT; then
+    echo "SMART_ROOT is None,Please set SMART_ROOT"
+    exit 0
+fi
 
 # 0. build soft link for mm configs
-workdir=$(cd $(dirname $1); pwd)
-if [[ "$workdir" =~ "submodules/mmdet" ]]
-then 
-    if [ -d "$workdir/algolib/configs" ]
-    then
-        rm -rf $workdir/algolib/configs
-        ln -s $workdir/configs $workdir/algolib/
-    else
-        ln -s $workdir/configs $workdir/algolib/
-    fi
+if [ -x "$SMART_ROOT/submodules" ];then
+    submodules_root=$SMART_ROOT
+else    
+    submodules_root=$PWD
+fi
+
+if [ -d "$submodules_root/submodules/mmdet/algolib/configs" ]
+then
+    rm -rf $submodules_root/submodules/mmdet/algolib/configs
+    ln -s $submodules_root/submodules/mmdet/configs $submodules_root/submodules/mmdet/algolib/
 else
-    if [ -d "$workdir/submodules/mmdet/algolib/configs" ]
-    then
-        rm -rf $workdir/submodules/mmdet/algolib/configs
-        ln -s $workdir/submodules/mmdet/configs $workdir/submodules/mmdet/algolib/
-    else
-        ln -s $workdir/submodules/mmdet/configs $workdir/submodules/mmdet/algolib/
-    fi
+    ln -s $submodules_root/submodules/mmdet/configs $submodules_root/submodules/mmdet/algolib/
 fi
 
 # 1. build file folder for save log,format: algolib_gen/frame
 mkdir -p algolib_gen/mmdet/$3
 export PYTORCH_VERSION=1.4
+
 # 2. set time
 now=$(date +"%Y%m%d_%H%M%S")
 
 # 3. set env 
 path=$PWD
-if [[ "$path" =~ "submodules/mmdet" ]]
+if [[ "$path" =~ "submodules" ]]
 then 
-    pyroot=$path
-    comroot=$path/../..
-    init_path=$path/..
+    pyroot=$submodules_root/mmdet
 else
-    pyroot=$path/submodules/mmdet
-    comroot=$path
-    init_path=$path/submodules
+    pyroot=$submodules_root/submodules/mmdet
 fi
 echo $pyroot
-export PYTHONPATH=$comroot:$pyroot:$PYTHONPATH
+export PYTHONPATH=$pyroot:$PYTHONPATH
 export MODEL_NAME=$3
 export FRAME_NAME=mmdet    #customize for each frame
 
-# init_path
-export PYTHONPATH=$init_path/common/sites/:$PYTHONPATH # necessary for init
+# 4. set init_path
+export PYTHONPATH=$SMART_ROOT/common/sites/:$PYTHONPATH
 
-# 4. build necessary parameter
+# 5. build necessary parameter
 partition=$1  
 name=$3
 MODEL_NAME=$3
@@ -58,7 +54,7 @@ EXTRA_ARGS=${array[@]:3}
 EXTRA_ARGS=${EXTRA_ARGS//--resume/--resume-from}
 SRUN_ARGS=${SRUN_ARGS:-""}
 
-# 5. model choice
+# 6. model choice
 export PARROTS_DEFAULT_LOGGER=FALSE
 
 case $MODEL_NAME in
@@ -131,8 +127,6 @@ case $MODEL_NAME in
 esac
 
 port=`expr $RANDOM % 10000 + 20000`
-
-set -x
 
 file_model=${FULL_MODEL##*/}
 folder_model=${FULL_MODEL%/*}
