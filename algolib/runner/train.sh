@@ -1,48 +1,45 @@
 #!/bin/bash
 set -x
- 
+set -o pipefail
+set -e
+
+# 0. check the most important SMART_ROOT
+echo  "!!!!!SMART_ROOT is" $SMART_ROOT
 if $SMART_ROOT; then
     echo "SMART_ROOT is None,Please set SMART_ROOT"
     exit 0
 fi
 
-# 0. build soft link for mm configs
-if [ -x "$SMART_ROOT/submodules" ];then
-    submodules_root=$SMART_ROOT
-else    
-    submodules_root=$PWD
-fi
-
-if [ -d "$submodules_root/submodules/mmdet/algolib/configs" ]
-then
-    rm -rf $submodules_root/submodules/mmdet/algolib/configs
-    ln -s $submodules_root/submodules/mmdet/configs $submodules_root/submodules/mmdet/algolib/
-else
-    ln -s $submodules_root/submodules/mmdet/configs $submodules_root/submodules/mmdet/algolib/
-fi
-
-# 1. build file folder for save log,format: algolib_gen/frame
-mkdir -p algolib_gen/mmdet/$3
-export PYTORCH_VERSION=1.4
-
-# 2. set time
-now=$(date +"%Y%m%d_%H%M%S")
-
-# 3. set env 
-path=$PWD
-if [[ "$path" =~ "submodules" ]]
+# 1. set env_path and build soft links for mm configs
+if [[ $PWD =~ "mmdet" ]]
 then 
-    pyroot=$submodules_root/mmdet
+    pyroot=$PWD
 else
-    pyroot=$submodules_root/submodules/mmdet
+    pyroot=$PWD/mmdet
 fi
 echo $pyroot
-export PYTHONPATH=$pyroot:$PYTHONPATH
+if [ -d "$pyroot/algolib/configs" ]
+then
+    rm -rf $pyroot/algolib/configs
+    ln -s $pyroot/configs $pyroot/algolib/
+else
+    ln -s $pyroot/configs $pyroot/algolib/
+fi
+
+# 2. build file folder for save log and set time
+mkdir -p algolib_gen/mmdet/$3
+now=$(date +"%Y%m%d_%H%M%S")
+
+# 3. set env variables
+export PYTORCH_VERSION=1.4
 export MODEL_NAME=$3
 export FRAME_NAME=mmdet    #customize for each frame
+export PARROTS_DEFAULT_LOGGER=FALSE
+export PYTHONPATH=$pyroot:$PYTHONPATH
+export PYTHONPATH=${SMART_ROOT}:$PYTHONPATH
 
-# 4. set init_path
-export PYTHONPATH=$SMART_ROOT/common/sites/:$PYTHONPATH
+# 4. init
+export PYTHONPATH=${SMART_ROOT}/common/sites:$PYTHONPATH
 
 # 5. build necessary parameter
 partition=$1  
@@ -54,9 +51,7 @@ EXTRA_ARGS=${array[@]:3}
 EXTRA_ARGS=${EXTRA_ARGS//--resume/--resume-from}
 SRUN_ARGS=${SRUN_ARGS:-""}
 
-# 6. model choice
-export PARROTS_DEFAULT_LOGGER=FALSE
-
+# 6. model list
 case $MODEL_NAME in
     "mask_rcnn_r50_fpn_1x_coco")
         FULL_MODEL="mask_rcnn/mask_rcnn_r50_fpn_1x_coco"
@@ -100,9 +95,10 @@ case $MODEL_NAME in
     "panoptic_fpn_r50_fpn_1x_coco")
         FULL_MODEL="panoptic_fpn/panoptic_fpn_r50_fpn_1x_coco"
         ;;
-     "htc_r50_fpn_1x_coco")
-         FULL_MODEL="htc/htc_r50_fpn_1x_coco"
-         ;;
+    # "htc_r50_fpn_1x_coco")
+    #     FULL_MODEL="htc/htc_r50_fpn_1x_coco"
+    #     ;;
+    # htc模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7865?filter=-2
     "decoupled_solo_r50_fpn_1x_coco")
         FULL_MODEL="solo/decoupled_solo_r50_fpn_1x_coco"
         ;;
@@ -126,11 +122,12 @@ case $MODEL_NAME in
        ;; 
 esac
 
+# 7. set port and choice model
 port=`expr $RANDOM % 10000 + 20000`
-
 file_model=${FULL_MODEL##*/}
 folder_model=${FULL_MODEL%/*}
 
+# 8. run model
 srun -p $1 -n$2\
         --gres gpu:$g \
         --ntasks-per-node $g \
