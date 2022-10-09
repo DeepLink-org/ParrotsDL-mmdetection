@@ -149,13 +149,13 @@ class MlvlPointGenerator:
         """
         feat_h, feat_w = featmap_size
         stride_w, stride_h = self.strides[level_idx]
-        shift_x = (torch.arange(0, feat_w, device=device).int() +
+        shift_x = (torch.arange(0, feat_w, device=device) +
                    self.offset) * stride_w
         # keep featmap_size as Tensor instead of int, so that we
         # can convert to ONNX correctly
         shift_x = shift_x.to(dtype)
 
-        shift_y = (torch.arange(0, feat_h, device=device).int() +
+        shift_y = (torch.arange(0, feat_h, device=device) +
                    self.offset) * stride_h
         # keep featmap_size as Tensor instead of int, so that we
         # can convert to ONNX correctly
