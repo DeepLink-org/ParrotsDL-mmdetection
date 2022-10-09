@@ -120,7 +120,7 @@ class CenterPrior(nn.Module):
                                     topk_center_index,
                                     dtype=torch.bool))
 
-        center_prior_weights[~inside_gt_bbox_mask] = 0
+        center_prior_weights[inside_gt_bbox_mask==False] = 0
         return center_prior_weights, inside_gt_bbox_mask
 
 
@@ -237,13 +237,13 @@ class AutoAssignHead(FCOSHead):
         p_pos_weight = (confidence_weight * center_prior_weights) / (
             (confidence_weight * center_prior_weights).sum(
                 0, keepdim=True)).clamp(min=EPS)
-        reweighted_p_pos = (p_pos * p_pos_weight).sum(0)
+        reweighted_p_pos = (p_pos * p_pos_weight).sum(0).cpu()
         pos_loss = F.binary_cross_entropy(
-            reweighted_p_pos,
-            torch.ones_like(reweighted_p_pos),
+            reweighted_p_pos.unsqueeze(0),
+            torch.ones_like(reweighted_p_pos).unsqueeze(0),
             reduction='none')
         pos_loss = pos_loss.sum() * self.pos_loss_weight
-        return pos_loss,
+        return pos_loss.cuda(),
 
     def get_neg_loss_single(self, cls_score, objectness, gt_labels, ious,
                             inside_gt_bbox_mask):
@@ -276,7 +276,7 @@ class AutoAssignHead(FCOSHead):
             # the order of dinmension would affect the value of
             # p_neg_weight, we strictly follow the original
             # implementation.
-            inside_gt_bbox_mask = inside_gt_bbox_mask.permute(1, 0)
+            inside_gt_bbox_mask = inside_gt_bbox_mask.cpu().t().cuda()
             ious = ious.permute(1, 0)
 
             foreground_idxs = torch.nonzero(inside_gt_bbox_mask, as_tuple=True)
@@ -287,13 +287,13 @@ class AutoAssignHead(FCOSHead):
 
             for instance_idx in range(num_gts):
                 idxs = foreground_idxs[0] == instance_idx
-                if idxs.any():
+                if idxs.cpu().any():
                     temp_weight[idxs] = normalize(temp_weight[idxs])
 
             p_neg_weight[foreground_idxs[1],
                          gt_labels[foreground_idxs[0]]] = 1 - temp_weight
 
-        logits = (joint_conf * p_neg_weight)
+        logits = (joint_conf * p_neg_weight).cpu()
         neg_loss = (
             logits**2 * F.binary_cross_entropy(
                 logits, torch.zeros_like(logits), reduction='none'))
@@ -382,7 +382,7 @@ class AutoAssignHead(FCOSHead):
                         dim=-1, keepdim=True).values.repeat(1, temp_num_gt)
                 else:
                     ious = ious.new_zeros(num_points, temp_num_gt)
-                ious[~inside_gt_bbox_mask] = 0
+                ious[inside_gt_bbox_mask==False] = 0
                 ious_list.append(ious)
             loss_bbox = self.loss_bbox(
                 decoded_bbox_preds,
@@ -411,7 +411,7 @@ class AutoAssignHead(FCOSHead):
         center_loss = []
         for i in range(len(img_metas)):
 
-            if inside_gt_bbox_mask_list[i].any():
+            if inside_gt_bbox_mask_list[i].cpu().any():
                 center_loss.append(
                     len(gt_bboxes[i]) /
                     center_prior_weight_list[i].sum().clamp_(min=EPS))
