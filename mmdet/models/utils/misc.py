@@ -539,7 +539,7 @@ def get_box_tensor(boxes: Union[Tensor, BaseBoxes]) -> Tensor:
 
 
 _torch_version_div_indexing = (
-    'parrots' not in torch.__version__
+    'parrots' != torch.__version__
     and digit_version(torch.__version__) >= digit_version('1.8'))
 
 

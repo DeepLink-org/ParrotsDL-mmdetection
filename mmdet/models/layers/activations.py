@@ -5,7 +5,7 @@ from mmengine.utils import digit_version
 
 from mmdet.registry import MODELS
 
-if digit_version(torch.__version__) >= digit_version('1.7.0'):
+if 'parrots' != torch.__version__ and digit_version(torch.__version__) >= digit_version('1.7.0'):
     from torch.nn import SiLU
 else:
 
