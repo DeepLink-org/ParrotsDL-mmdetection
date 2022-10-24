@@ -5,18 +5,18 @@ model = dict(
         style='caffe',
         init_cfg=dict(
             type='Pretrained',
-            checkpoint='/mnt/lustre/share_data/PAT/datasets/mmdet/pretrain/resnet50_msra-5891d200.pth')))
+            checkpoint='/mnt/lustre/share/share_data/PAT/datasets/mmdet/pretrain/resnet50_msra-5891d200.pth')))
 # use caffe img_norm
 img_norm_cfg = dict(
     mean=[103.530, 116.280, 123.675], std=[1.0, 1.0, 1.0], to_rgb=False)
 
-file_client_args = dict(
-    backend='petrel',
-    path_mapping=dict({
-        './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
-    }))
+# file_client_args = dict(
+#     backend='petrel',
+#     path_mapping=dict({
+#         './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
+#     }))
 
-# file_client_args = dict(backend='disk')
+file_client_args = dict(backend='disk')
 
 train_pipeline = [
     dict(type='LoadImageFromFile', file_client_args=file_client_args),

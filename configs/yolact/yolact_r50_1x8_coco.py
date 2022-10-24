@@ -16,7 +16,7 @@ model = dict(
         style='pytorch',
         init_cfg=dict(
             type='Pretrained',
-            checkpoint='/mnt/lustre/share_data/PAT/datasets/mmdet/pretrain/resnet50-19c8e357.pth'
+            checkpoint='/mnt/lustre/share/share_data/PAT/datasets/mmdet/pretrain/resnet50-19c8e357.pth'
         )),
     neck=dict(
         type='FPN',
@@ -89,18 +89,18 @@ model = dict(
         max_per_img=100))
 # dataset settings
 
-file_client_args = dict(
-    backend='petrel',
-    path_mapping=dict({
-        './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
-    }))
-imge_root = './data'
+# file_client_args = dict(
+#     backend='petrel',
+#     path_mapping=dict({
+#         './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
+#     }))
+imge_root = '/mnt/lustre/share/openmmlab/datasets/detection/coco/'
 
-# file_client_args = dict(backend='disk')
-# imge_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
+file_client_args = dict(backend='disk')
+# imge_root = '/mnt/lustre/share/share_data/PAT/datasets/mscoco2017/'
 
 dataset_type = 'CocoDataset'
-data_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
+data_root = '/mnt/lustre/share/share_data/PAT/datasets/mscoco2017/'
 img_norm_cfg = dict(
     mean=[123.68, 116.78, 103.94], std=[58.40, 57.12, 57.38], to_rgb=True)
 train_pipeline = [

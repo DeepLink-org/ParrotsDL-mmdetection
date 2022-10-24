@@ -23,17 +23,17 @@ model = dict(
 
 # dataset settings
 
-file_client_args = dict(
-    backend='petrel',
-    path_mapping=dict({
-        './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
-    }))
-imge_root = './data'
+# file_client_args = dict(
+#     backend='petrel',
+#     path_mapping=dict({
+#         './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
+#     }))
+imge_root = '/mnt/lustre/share/openmmlab/datasets/detection/coco/'
 
-# file_client_args = dict(backend='disk')
-# imge_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
+file_client_args = dict(backend='disk')
+# imge_root = '/mnt/lustre/share/share_data/PAT/datasets/mscoco2017/'
 
-data_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
+data_root = '/mnt/lustre/share/share_data/PAT/datasets/mscoco2017/'
 dataset_type = 'CocoDataset'
 
 train_pipeline = [

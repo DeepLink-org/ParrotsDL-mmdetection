@@ -12,7 +12,7 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/mnt/lustre/share_data/PAT/datasets/mmdet/pretrain/vgg16_caffe-292e1171.pth'
+            '/mnt/lustre/share/share_data/PAT/datasets/mmdet/pretrain/vgg16_caffe-292e1171.pth'
         )),
     neck=dict(
         type='SSDNeck',

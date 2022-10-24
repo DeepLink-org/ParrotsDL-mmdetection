@@ -13,7 +13,7 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/mnt/lustre/share_data/PAT/datasets/mmdet/pretrain/resnet50-19c8e357.pth'
+            '/mnt/lustre/share/share_data/PAT/datasets/mmdet/pretrain/resnet50-19c8e357.pth'
         )),
     neck=dict(
         type='FPN',

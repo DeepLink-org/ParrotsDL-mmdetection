@@ -15,7 +15,7 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/mnt/lustre/share_data/PAT/datasets/mmdet/pretrain/resnet50-19c8e357.pth'
+            '/mnt/lustre/share/share_data/PAT/datasets/mmdet/pretrain/resnet50-19c8e357.pth'
         )),
     bbox_head=dict(
         type='DETRHead',
@@ -77,13 +77,13 @@ img_norm_cfg = dict(
 # train_pipeline, NOTE the img_scale and the Pad's size_divisor is different
 # from the default setting in mmdet.
 
-file_client_args = dict(
-    backend='petrel',
-    path_mapping=dict({
-        './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
-    }))
+# file_client_args = dict(
+#     backend='petrel',
+#     path_mapping=dict({
+#         './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
+#     }))
 
-# file_client_args = dict(backend='disk')
+file_client_args = dict(backend='disk')
 
 train_pipeline = [
     dict(type='LoadImageFromFile', file_client_args=file_client_args),

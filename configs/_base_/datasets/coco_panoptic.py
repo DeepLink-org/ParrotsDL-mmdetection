@@ -1,17 +1,17 @@
 # dataset settings
 
-file_client_args = dict(
-    backend='petrel',
-    path_mapping=dict({
-        './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
-    }))
-imge_root = './data'
+# file_client_args = dict(
+#     backend='petrel',
+#     path_mapping=dict({
+#         './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
+#     }))
+imge_root = '/mnt/lustre/share/openmmlab/datasets/detection/coco/'
 
-# file_client_args = dict(backend='disk')
-# imge_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
+file_client_args = dict(backend='disk')
+# imge_root = '/mnt/lustre/share/share_data/PAT/datasets/mscoco2017/'
 
 dataset_type = 'CocoPanopticDataset'
-data_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
+data_root = '/mnt/lustre/share/share_data/PAT/datasets/mscoco2017/'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 train_pipeline = [
