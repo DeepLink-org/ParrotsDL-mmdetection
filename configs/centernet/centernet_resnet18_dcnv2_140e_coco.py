@@ -86,7 +86,7 @@ test_pipeline = [
 ]
 
 dataset_type = 'CocoDataset'
-data_root = 'data/coco/'
+data_root = '/mnt/lustre/share/openmmlab/datasets/detection/coco/'
 
 # Use RepeatDataset to speed up training
 data = dict(
