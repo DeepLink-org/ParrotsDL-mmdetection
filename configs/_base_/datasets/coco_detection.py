@@ -8,10 +8,10 @@
 # imge_root = './data'
 
 file_client_args = dict(backend='disk')
-imge_root = './data/coco/'
+imge_root = '/mnt/lustre/share/openmmlab/datasets/detection/coco/'
 
 dataset_type = 'CocoDataset'
-data_root = './data/coco/'
+data_root = '/mnt/lustre/share/openmmlab/datasets/detection/coco/'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 train_pipeline = [
