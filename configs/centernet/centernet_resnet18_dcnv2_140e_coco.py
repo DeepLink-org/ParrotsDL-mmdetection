@@ -13,14 +13,14 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/mnt/lustre/sunxiaoye/MyWorks/MMRunModel/Centernet/mmdetection/pretrain/resnet18-5c106cde.pth'
+            '/mnt/lustre/share/sunxiaoye/v0.22test/resnet18-5c106cde.pth'
         )),
     neck=dict(
         type='CTResNetNeck',
         in_channel=512,
         num_deconv_filters=(256, 128, 64),
         num_deconv_kernels=(4, 4, 4),
-        use_dcn=False),
+        use_dcn=True),
     bbox_head=dict(
         type='CenterNetHead',
         num_classes=80,
