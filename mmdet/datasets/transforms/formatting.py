@@ -91,7 +91,6 @@ class PackDetInputs(BaseTransform):
                 else:
                     instance_data[self.mapping_table[key]] = results[key]
             else:
-                #import pdb;pdb.set_trace()
                 if 'gt_ignore_flags' in results:
                     instance_data[self.mapping_table[key]] = to_tensor(
                         results[key][valid_idx])
