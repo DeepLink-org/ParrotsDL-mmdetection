@@ -9,7 +9,7 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/mnt/lustre/sunxiaoye/MyWorks/MMRunModel/YoLoV3/mmdetection/darknet53-a628ea1b.pth'
+            '/mnt/lustre/share/sunxiaoye/v0.22test/darknet53-a628ea1b.pth'
         )),
     neck=dict(
         type='YOLOV3Neck',
