@@ -1,17 +1,10 @@
 # dataset settings
-
-file_client_args = dict(
-    backend='petrel',
-    path_mapping=dict({
-        './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
-    }))
-imge_root = './data'
-
-# file_client_args = dict(backend='disk')
-# imge_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
-
 dataset_type = 'CocoDataset'
-data_root = '/mnt/lustre/share_data/PAT/datasets/mscoco2017/'
+#data_root = '/mnt/lustre/share/openmmlab/datasets/detection/coco'
+# use file client petrel
+file_client_args = dict(backend='petrel')
+data_root = 'openmmlab:s3://openmmlab/datasets/detection/coco/'
+
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 train_pipeline = [
@@ -41,20 +34,20 @@ test_pipeline = [
 ]
 data = dict(
     samples_per_gpu=2,
-    workers_per_gpu=2,
+    workers_per_gpu=0,
     train=dict(
         type=dataset_type,
-        ann_file=data_root + 'annotations/instances_train2017.json',
-        img_prefix=imge_root + 'train2017/',
+        ann_file='/mnt/lustre/share/wangchenyu/coco/annotations/instances_train2017.json',
+        img_prefix=data_root + 'train2017/',
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
-        ann_file=data_root + 'annotations/instances_val2017.json',
-        img_prefix=imge_root + 'val2017/',
+        ann_file='/mnt/lustre/share/wangchenyu/coco/annotations/instances_val2017.json',
+        img_prefix=data_root + 'val2017/',
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
-        ann_file=data_root + 'annotations/instances_val2017.json',
-        img_prefix=imge_root + 'val2017/',
+        ann_file='/mnt/lustre/share/wangchenyu/coco/annotations/instances_val2017.json',
+        img_prefix=data_root + 'val2017/',
         pipeline=test_pipeline))
 evaluation = dict(interval=1, metric='bbox')
