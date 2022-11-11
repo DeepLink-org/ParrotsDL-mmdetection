@@ -44,7 +44,7 @@ file_client_args = dict(
 imge_root = '/mnt/lustre/share/openmmlab/datasets/detection/coco/'
 
 file_client_args = dict(backend='disk')
-# imge_root = '/mnt/lustre/share/share_data/PAT/datasets/mmdet/mmlab_coco/'
+# imge_root = '/mnt/lustre/share/openmmlab/datasets/detection/coco/'
 
 train_pipeline = [
     dict(type='LoadImageFromFile', to_float32=True, color_type='color', file_client_args=file_client_args),
