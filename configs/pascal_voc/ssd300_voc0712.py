@@ -8,7 +8,7 @@ model = dict(
                                                                     0.9))))
 # dataset settings
 dataset_type = 'VOCDataset'
-data_root = 'data/VOCdevkit/'
+data_root = '/mnt/lustre/share_data/PAT/datasets/mmdet/VOCdevkit/'
 img_norm_cfg = dict(mean=[123.675, 116.28, 103.53], std=[1, 1, 1], to_rgb=True)
 train_pipeline = [
     dict(type='LoadImageFromFile'),

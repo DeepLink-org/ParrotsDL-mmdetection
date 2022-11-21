@@ -18,6 +18,7 @@ models:
   - retinanet_r50_fpn_fp16_1x_coco
   - faster_rcnn_r50_fpn_1x_coco
   - ssd300_coco
+  - ssd300_voc0712
   - retinanet_r50_fpn_1x_coco
   - yolov3_d53_320_273e_coco
   - deformable_detr_r50_16x2_50e_coco
@@ -33,7 +34,10 @@ models:
   - grid_rcnn_r50_fpn_gn-head_2x_coco
   - gfl_r50_fpn_1x_coco
   - htc_r50_fpn_1x_coco
-  # - autoassign_r50_fpn_8x2_1x_coco
-  # autoassign模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7809?filter=-2
+  - autoassign_r50_fpn_8x2_1x_coco
+  - faster_rcnn_r101_fpn_1x_coco
+  - mask_rcnn_r101_fpn_1x_coco
+  - solo_r50_fpn_1x_coco
+  - mask_rcnn_swin-t-p4-w7_fpn_1x_coco
   # - yolox_tiny_8x8_300e_coco
   # yolox模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7812?filter=-2

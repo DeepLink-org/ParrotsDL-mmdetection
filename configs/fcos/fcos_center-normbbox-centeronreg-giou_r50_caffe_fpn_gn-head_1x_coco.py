@@ -17,13 +17,13 @@ model = dict(
 
 # dataset settings
 
-file_client_args = dict(
-    backend='petrel',
-    path_mapping=dict({
-        './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
-    }))
+# file_client_args = dict(
+#     backend='petrel',
+#     path_mapping=dict({
+#         './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
+#     }))
 
-# file_client_args = dict(backend='disk')
+file_client_args = dict(backend='disk')
 
 img_norm_cfg = dict(
     mean=[103.530, 116.280, 123.675], std=[1.0, 1.0, 1.0], to_rgb=False)

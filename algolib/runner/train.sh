@@ -55,11 +55,17 @@ case $MODEL_NAME in
     "mask_rcnn_r50_fpn_1x_coco")
         FULL_MODEL="mask_rcnn/mask_rcnn_r50_fpn_1x_coco"
         ;;
+    "mask_rcnn_r101_fpn_1x_coco")
+        FULL_MODEL="mask_rcnn/mask_rcnn_r101_fpn_1x_coco"
+        ;;
     "retinanet_r50_fpn_1x_coco")
         FULL_MODEL="retinanet/retinanet_r50_fpn_1x_coco"
         ;;
     "ssd300_coco")
         FULL_MODEL="ssd/ssd300_coco"
+        ;;
+    "ssd300_voc0712")
+        FULL_MODEL="pascal_voc/ssd300_voc0712"
         ;;
     "faster_rcnn_r50_fpn_1x_coco")
         FULL_MODEL="faster_rcnn/faster_rcnn_r50_fpn_1x_coco"
@@ -111,10 +117,18 @@ case $MODEL_NAME in
     "gfl_r50_fpn_1x_coco")
         FULL_MODEL="gfl/gfl_r50_fpn_1x_coco"
         ;;
-    # "autoassign_r50_fpn_8x2_1x_coco")
-    #    FULL_MODEL="autoassign/autoassign_r50_fpn_8x2_1x_coco"
-    #    ;;
-    # autoassign模型有问题，详见https://jira.sensetime.com/browse/PARROTSXQ-7809?filter=-2
+    "autoassign_r50_fpn_8x2_1x_coco")
+       FULL_MODEL="autoassign/autoassign_r50_fpn_8x2_1x_coco"
+       ;;
+    "faster_rcnn_r101_fpn_1x_coco")
+       FULL_MODEL="faster_rcnn/faster_rcnn_r101_fpn_1x_coco"
+       ;;
+    "solo_r50_fpn_1x_coco")
+       FULL_MODEL="solo/solo_r50_fpn_1x_coco"
+       ;;
+    "mask_rcnn_swin-t-p4-w7_fpn_1x_coco")
+       FULL_MODEL="swin/mask_rcnn_swin-t-p4-w7_fpn_1x_coco"
+       ;;
     *)
        echo "invalid $MODEL_NAME"
        exit 1
@@ -128,7 +142,7 @@ folder_model=${FULL_MODEL%/*}
 
 # 8. run model
 srun -p $1 -n$2\
-        --gres gpu:$g \
+        --gres mlu:$g \
         --ntasks-per-node $g \
         --job-name=${FRAME_NAME}_${MODEL_NAME} ${SRUN_ARGS}\
     python -u $pyroot/tools/train.py --config=$pyroot/algolib/configs/$folder_model/$file_model.py --launcher=slurm  \

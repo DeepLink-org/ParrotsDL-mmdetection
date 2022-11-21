@@ -1,13 +1,13 @@
 _base_ = './yolov3_d53_mstrain-608_273e_coco.py'
 # dataset settings
 
-file_client_args = dict(
-    backend='petrel',
-    path_mapping=dict({
-        './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
-    }))
+# file_client_args = dict(
+#     backend='petrel',
+#     path_mapping=dict({
+#         './data': 'openmmlab:s3://openmmlab/datasets/detection/coco/',
+#     }))
 
-# file_client_args = dict(backend='disk')
+file_client_args = dict(backend='disk')
 
 img_norm_cfg = dict(mean=[0, 0, 0], std=[255., 255., 255.], to_rgb=True)
 train_pipeline = [
