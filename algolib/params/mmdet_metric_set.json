@@ -28,5 +28,41 @@
             0.01,
             0.6
         ]
+    },
+    "autoassign_r50_fpn_8x2_1x_coco": {
+        "rate": [
+            0.01,
+            0.6
+        ]
+    },
+    "faster_rcnn_r101_fpn_1x_coco": {
+        "rate": [
+            0.01,
+            0.6
+        ]
+    },
+    "mask_rcnn_r101_fpn_1x_coco": {
+        "rate": [
+            0.01,
+            0.6
+        ]
+    },
+    "ssd300_voc0712": {
+        "rate": [
+            0.01,
+            0.6
+        ]
+    },
+    "solo_r50_fpn_1x_coco": {
+        "rate": [
+            0.01,
+            0.6
+        ]
+    },
+    "mask_rcnn_swin-t-p4-w7_fpn_1x_coco": {
+        "rate": [
+            0.01,
+            0.6
+        ]
     }
 }
