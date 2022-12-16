@@ -51,21 +51,21 @@
         "path": "/mnt/lustre/share_data/PAT/datasets/mmdet/checkpoint/deformable_detr_r50_16x2_50e_coco/epoch_50.pth"
     },
     "autoassign_r50_fpn_8x2_1x_coco": {
-        "path": "/mnt/lustre/share_data/sunxiaoye/one_iter/ckpt/auto_assign_r50_fpn_1x_coco_20210413_115540-5e17991f.pth"
+        "path": "/mnt/lustre/share_data/PAT/one_iter_run_data/ckpt/auto_assign_r50_fpn_1x_coco_20210413_115540-5e17991f.pth"
     },
     "faster_rcnn_r101_fpn_1x_coco": {
-        "path": "/mnt/lustre/share_data/sunxiaoye/one_iter/ckpt/faster_rcnn_r101_fpn_1x_coco_20200130-f513f705.pth"
+        "path": "/mnt/lustre/share_data/PAT/one_iter_run_data/ckpt/faster_rcnn_r101_fpn_1x_coco_20200130-f513f705.pth"
     },
     "mask_rcnn_r101_fpn_1x_coco": {
-        "path": "/mnt/lustre/share_data/sunxiaoye/one_iter/ckpt/mask_rcnn_r101_fpn_1x_coco_20200204-1efe0ed5.pth"
+        "path": "/mnt/lustre/share_data/PAT/one_iter_run_data/ckpt/mask_rcnn_r101_fpn_1x_coco_20200204-1efe0ed5.pth"
     },
     "ssd300_voc0712": {
-        "path": "/mnt/lustre/share_data/sunxiaoye/one_iter/ckpt/ssd300_voc0712_epoch_24.pth"
+        "path": "/mnt/lustre/share_data/PAT/one_iter_run_data/ckpt/ssd300_voc0712_epoch_24.pth"
     },
     "solo_r50_fpn_1x_coco": {
-        "path": "/mnt/lustre/share_data/sunxiaoye/one_iter/ckpt/solo_r50_fpn_1x_coco_20210821_035055-2290a6b8.pth"
+        "path": "/mnt/lustre/share_data/PAT/one_iter_run_data/ckpt/solo_r50_fpn_1x_coco_20210821_035055-2290a6b8.pth"
     },
     "mask_rcnn_swin-t-p4-w7_fpn_1x_coco": {
-        "path": "/mnt/lustre/share_data/sunxiaoye/one_iter/ckpt/mask_rcnn_swin-t-p4-w7_fpn_1x_coco_20210902_120937-9d6b7cfa.pth"
+        "path": "/mnt/lustre/share_data/PAT/one_iter_run_data/ckpt/mask_rcnn_swin-t-p4-w7_fpn_1x_coco_20210902_120937-9d6b7cfa.pth"
     }
 }
