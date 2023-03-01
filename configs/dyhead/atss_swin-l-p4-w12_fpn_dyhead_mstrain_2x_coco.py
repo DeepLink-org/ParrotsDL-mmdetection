@@ -22,7 +22,7 @@ model = dict(
         # in FPN, otherwise some parameter will not be used
         with_cp=False,
         convert_weights=True,
-        init_cfg=dict(type='Pretrained', checkpoint=pretrained)),
+        init_cfg=dict(type='Pretrained', checkpoint='pretrain/swin_large_patch4_window12_384_22k.pth')),
     neck=[
         dict(
             type='FPN',
@@ -81,7 +81,7 @@ model = dict(
 
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'data/coco/'
+data_root = '/mnt/lustre/share/openmmlab/datasets/detection/coco/'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 
@@ -90,7 +90,7 @@ train_pipeline = [
     dict(type='LoadAnnotations', with_bbox=True),
     dict(
         type='Resize',
-        img_scale=[(2000, 480), (2000, 1200)],
+        img_scale=[(500, 120), (500, 300)],
         multiscale_mode='range',
         keep_ratio=True,
         backend='pillow'),
@@ -162,3 +162,7 @@ lr_config = dict(
     warmup_ratio=0.001,
     step=[8, 11])
 runner = dict(type='EpochBasedRunner', max_epochs=12)
+
+# fp16 = dict(loss_scale='dynamic')
+# fp16 = dict(loss_scale=512.)
+# fp16 = dict(loss_scale=256.0)     # 防止loss飞
