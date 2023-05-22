@@ -1,0 +1,50 @@
+LINKLINK_FUSED_THREAD_POOL_SIZE=1
+XDG_SESSION_ID=29140
+HOSTNAME=SH-IDC1-10-198-8-31
+TERM=screen
+SHELL=/bin/zsh
+I_MPI_FABRICS=shm:tcp
+HISTSIZE=50000
+SSH_CLIENT=10.198.22.168 53358 22
+CONDA_SHLVL=1
+SSH_TTY=/dev/pts/32
+QT_GRAPHICSSYSTEM_CHECKED=1
+USER=zhuyan1
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=01;05;37;41:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.axv=01;35:*.anx=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=01;36:*.au=01;36:*.flac=01;36:*.mid=01;36:*.midi=01;36:*.mka=01;36:*.mp3=01;36:*.mpc=01;36:*.ogg=01;36:*.ra=01;36:*.wav=01;36:*.axa=01;36:*.oga=01;36:*.spx=01;36:*.xspf=01;36:
+LD_LIBRARY_PATH=/mnt/cache/share/gcc/gmp-4.3.2/lib:/mnt/cache/share/gcc/mpfr-2.4.2/lib:/mnt/cache/share/gcc/mpc-0.8.1/lib:/mnt/lustre/cache/cuda-11.2/lib64:/mnt/cache/share/gcc/gmp-4.3.2/lib:/mnt/cache/share/gcc/mpfr-2.4.2/lib:/mnt/cache/share/gcc/mpc-0.8.1/lib:/mnt/lustre/cache/cuda-11.2/lib64:/mnt/lustre/share/gcc/gmp-4.3.2/lib:/mnt/lustre/share/gcc/mpfr-2.4.2/lib:/mnt/lustre/share/gcc/mpc-0.8.1/lib:/mnt/lustre/share/cuda-10.1/lib64:/mnt/cache/share/cuda-11.2/lib64/:/mnt/cache/share/memcached_client/lib/:/mnt/cache/share/cuda-11.2/lib64/:/mnt/cache/share/memcached_client/lib/:/mnt/cache/share/spring/conda_envs/miniconda3/lib:/mnt/cache/share/spring/conda_envs/miniconda3/envs/s0.3.4/lib:/mnt/lustre/share/gcc/gmp-4.3.2/lib:/mnt/lustre/share/gcc/mpfr-2.4.2/lib:/mnt/lustre/share/gcc/mpc-0.8.1/lib:/mnt/cache/share/cuda-10.2/lib64/:/mnt/cache/share/memcached_client/lib/:/usr/local/cuda/lib:/usr/local/cuda/lib64/:CONDA_EXE=/mnt/cache/share/spring/conda_envs/miniconda3/bin/conda
+CONDA_EXE=/mnt/cache/share/spring/conda_envs/miniconda3/bin/conda
+TMUX=/tmp/tmux-900022128/default,237541,1
+_CE_CONDA=
+PIP_CONFIG_FILE=/mnt/cache/share/spring/.pip/pip.conf
+PATH=/mnt/cache/zhuyan1/.conda/envs/:/mnt/cache/share/cmake3.8/bin/:/mnt/cache/share/gcc/gcc-5.4/bin/:/mnt/cache/share/cuda-11.2/bin:/mnt/cache/zhuyan1/.local/bin/:/mnt/cache/zhuyan1/.conda/envs/:/mnt/cache/zhuyan1/.local/bin/:/mnt/cache/zhuyan1/.conda/envs/:/mnt/cache/share/spring:/mnt/cache/share/cmake3.8/bin/:/mnt/cache/share/gcc/gcc-5.4/bin/:/mnt/cache/share/cuda-11.2/bin:/mnt/lustre/share/cmake3.8/bin/:/mnt/lustre/share/gcc/gcc-5.3.0/bin/:/mnt/lustre/share/cuda-10.1/bin:/mnt/cache/zhuyan1/sg/bin:/mnt/cache/share/spring/conda_envs/miniconda3/condabin:/mnt/cache/share/spring:/mnt/cache/share/spring/conda_envs/miniconda3/bin:/mnt/cache/share/cuda-9.0/bin:/mnt/lustre/share/gcc/gcc-5.3.0/bin:/mnt/cache/share/cuda-10.2/bin:/usr/local/cuda/bin:/mnt/cache/share/platform/env:/mnt/cache/share/cuda-10.2/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/ibutils/bin:/opt/puppetlabs/bin:/mnt/lustre/zhuyan1/bin:/mnt/lustre/zhuyan1/.local/bin:/mnt/lustre/zhuyan1/.local/bin
+MAIL=/var/spool/mail/zhuyan1
+PWD=/mnt/cache/zhuyan1/mmdet_codetr
+LANG=en_US.UTF-8
+MODULEPATH=/usr/share/Modules/modulefiles:/etc/modulefiles
+LOADEDMODULES=
+TMUX_PANE=%87
+_CE_M=
+HISTCONTROL=ignoredups
+LINKLINK_FUSED_BUFFER_TOTAL_MB=128
+SHLVL=2
+HOME=/mnt/lustre/zhuyan1
+LOGNAME=zhuyan1
+CONDA_PYTHON_EXE=/mnt/cache/share/spring/conda_envs/miniconda3/bin/python
+SSH_CONNECTION=10.198.22.169 52046 10.198.8.31 22
+MODULESHOME=/usr/share/Modules
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+PROMPT_COMMAND={ msg=$(history 1 | { read x y; echo $y; }); logger "[euid=$(whoami)]":$(who am i):[`pwd`]"$msg";}
+XDG_RUNTIME_DIR=/run/user/900022128
+LINKLINK_FUSED_BUFFER_LOG2_MB=4
+HISTTIMEFORMAT=%F %T zhuyan1 
+BASH_FUNC_module%%=() {  eval `/usr/bin/modulecmd bash $*`
+}
+OLDPWD=/mnt/cache/zhuyan1
+ZSH=/mnt/lustre/zhuyan1/.oh-my-zsh
+PAGER=less
+LESS=-R
+LSCOLORS=Gxfxcxdxbxegedabagacad
+CONDA_PREFIX=/mnt/cache/zhuyan1/sg
+CONDA_DEFAULT_ENV=/mnt/cache/zhuyan1/sg
+CONDA_PROMPT_MODIFIER=(/mnt/cache/zhuyan1/sg) 
+_=/usr/bin/env
