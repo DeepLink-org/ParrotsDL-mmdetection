@@ -2,15 +2,23 @@ _base_ = [
     '../../_base_/datasets/coco_detection.py',
     '../../_base_/default_runtime.py'
 ]
+#file_client_args = dict(
+#    backend='petrel')
+#file_client_args = dict(
+#    backend='petrel')
 file_client_args = dict(
-    backend='petrel')
-file_client_args = dict(
-    backend='petrel')
+    backend='petrel',
+    enable_mc=True,
+    path_mapping=dict({'/mnt/lustre/share/DSK/datasets/mscoco2017/val2017/nw/JPEGImages':'sh1424:s3://southern_grid/JPEGImages'}
+))
+
+
+
 norm_cfg = dict(type='MMSyncBN', requires_grad=True)
 head_norm_cfg = dict(type='MMSyncBN', requires_grad=True)
 resume_from = None
 load_from = None
-pretrained = '/mnt/lustre/zongzhuofan/models/mixmim/giant_800/ckpt/checkpoint.pth'
+pretrained = None  #'/mnt/lustre/zongzhuofan/models/mixmim/giant_800/ckpt/checkpoint.pth'
 # Use MMSyncBN that handles empty tensor in head. It can be changed to
 # SyncBN after https://github.com/pytorch/pytorch/issues/36530 is fixed
 # Requires MMCV-full after  https://github.com/open-mmlab/mmcv/pull/1205.
@@ -218,22 +226,25 @@ data = dict(
         dataset=dict(
             type='CocoDataset',
             classes=classes,
-            ann_file='/mnt/lustre/zongzhuofan/data/nw/nw_train.json',
-            img_prefix='/mnt/lustre/share_data/zongzhuofan/data/',
+            ann_file='/mnt/lustre/wanglei9/data/nw_train_new.json',
+            #img_prefix=dict(img='sh1424:s3://southern_grid'),
+            #img_prefix='/mnt/lustre/share_data/zongzhuofan/data/',
             pipeline=train_pipeline)),
     val=dict(
         type='CocoDataset',
         classes=classes,
         #ann_file='/mnt/lustre/zongzhuofan/data/nw/nw_train.json',
-        ann_file='/mnt/lustre/zongzhuofan/data/nw/nw_val.json',
-        img_prefix='/mnt/lustre/share_data/zongzhuofan/data/',
+        ann_file='/mnt/lustre/wanglei9/data/nw_val.json',
+        #img_prefix='/mnt/lustre/share_data/zongzhuofan/data/',
+        #img_prefix=dict(img='sh1424:s3://southern_grid'),
         pipeline=test_pipeline),
     test=dict(
         type='CocoDataset',
         classes=classes,
         #ann_file='/mnt/lustre/zongzhuofan/data/nw/nw_train.json',
-        ann_file='/mnt/lustre/zongzhuofan/data/nw/nw_val.json',
-        img_prefix='/mnt/lustre/share_data/zongzhuofan/data/',
+        ann_file='/mnt/lustre/wanglei9/data/nw_val.json',
+        #img_prefix='/mnt/lustre/share_data/zongzhuofan/data/',
+        #img_prefix=dict(img='sh1424:s3://southern_grid'),
         pipeline=test_pipeline))
 evaluation = dict(metric='bbox')
 dist_params = dict(backend='nccl', port=29515)

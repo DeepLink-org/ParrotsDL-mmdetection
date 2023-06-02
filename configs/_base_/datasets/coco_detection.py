@@ -1,6 +1,7 @@
 # dataset settings
 dataset_type = 'CocoDataset'
 data_root = '/mnt/lustre/share/DSK/datasets/mscoco2017/'
+#data_root = '/mnt/lustre/share_data/PAT/datasets/mmdet/mmlab_coco/'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 train_pipeline = [
@@ -29,6 +30,8 @@ test_pipeline = [
         ])
 ]
 data = dict(
+    #samples_per_gpu=1,
+    #workers_per_gpu=1,
     samples_per_gpu=2,
     workers_per_gpu=2,
     train=dict(

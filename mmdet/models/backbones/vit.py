@@ -13,7 +13,7 @@ from mmcv.cnn import build_norm_layer, constant_init, trunc_normal_init
 from mmcv.cnn.bricks.transformer import FFN, build_dropout
 from mmcv.cnn.utils.weight_init import trunc_normal_
 from mmcv.utils import to_2tuple
-from fairscale.nn.checkpoint import checkpoint_wrapper
+#from fairscale.nn.checkpoint import checkpoint_wrapper
 from timm.models.layers import DropPath, Mlp, trunc_normal_
 from ..builder import BACKBONES
 from ...utils import get_root_logger
@@ -657,7 +657,8 @@ class ViT(BaseModule):
                 interp_type=interp_type,
             )
             if use_act_checkpoint and i > checkpoint_idx:
-                block = checkpoint_wrapper(block)
+                print("!!!!!checkpoint_wrapper commment out")
+                #block = checkpoint_wrapper(block)
             self.blocks.append(block)
 
         self._out_feature_channels = {out_feature: embed_dim}

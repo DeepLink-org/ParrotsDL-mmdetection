@@ -54,27 +54,26 @@ class LoadImageFromFile:
         Returns:
             dict: The dict contains loaded image and meta information.
         """
+        #print(f"!!!!!!load img {results}")
         if self.file_client is None:
             self.file_client = mmcv.FileClient(**self.file_client_args)
-        # import pdb;pdb.set_trace()
         if results['img_prefix'] is not None:
             filename = osp.join(results['img_prefix'],
                                 results['img_info']['filename'])
         else:
             filename = results['img_info']['filename']
-        filename = filename.replace('./data/nuscenes/', 'public-1984:s3://openmmlab/datasets/detection3d/nuscenes/')
+        #filename = filename.replace('./data/nuscenes/', 'public-1984:s3://openmmlab/datasets/detection3d/nuscenes/')
         #filename = filename.replace('/mnt/lustre/zongzhuofan/3DAD/data/cla/annotations/', 'sh1424_2d:')
-        try:
-            img_bytes = self.file_client.get(filename)
-        except:
-            import pdb;pdb.set_trace()
-            print('cant read '+filename, flush=True)
-            results['img_info']['filename'] = 'object365V2/train/patch16/objects365_v2_00900001.jpg'
+        #try:
+        img_bytes = self.file_client.get(filename)
+        #except:
+            #import pdb;pdb.set_trace()
+            #results['img_info']['filename'] = 'object365V2/train/patch16/objects365_v2_00900001.jpg'
             #results['img_info']['filename'] = 'images/v2/patch30/objects365_v2_01492030.jpg'
-            filename = osp.join(results['img_prefix'],
-                                results['img_info']['filename'])
-            filename = 's3://open_dataset_original/Objects365/train/patch16/objects365_v2_00900001.jpg'
-            img_bytes = self.file_client.get(filename)
+            #filename = osp.join(results['img_prefix'],
+            #                    results['img_info']['filename'])
+            #filename = 's3://open_dataset_original/Objects365/train/patch16/objects365_v2_00900001.jpg'
+            #img_bytes = self.file_client.get(filename)
 
         img = mmcv.imfrombytes(
             img_bytes, flag=self.color_type, channel_order=self.channel_order)

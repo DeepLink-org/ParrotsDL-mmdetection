@@ -483,8 +483,10 @@ class DetrTransformerEncoder(TransformerLayerSequence):
                                       f'{self.__class__.__name__},' \
                                       f'Please specify post_norm_cfg'
             self.post_norm = None
-        self.with_cp = with_cp
+        self.with_cp = 0
+        #self.with_cp = with_cp
         if self.with_cp > 0:
+            print("!!!!  checkpoint_wrapper comment out @ transformer.py")
             for i in range(self.with_cp):
                 self.layers[i] = checkpoint_wrapper(self.layers[i])
 
@@ -1104,7 +1106,9 @@ class DeformableDetrTransformer(Transformer):
         scale = 2 * math.pi
         dim_t = torch.arange(
             num_pos_feats, dtype=torch.float32, device=proposals.device)
+        dim_t = dim_t.cpu()
         dim_t = temperature**(2 * (dim_t // 2) / num_pos_feats)
+        dim_t = dim_t.cuda()
         # N, L, 4
         proposals = proposals.sigmoid() * scale
         # N, L, 4, 128

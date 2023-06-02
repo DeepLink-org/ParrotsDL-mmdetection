@@ -4,7 +4,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from mmcv.cnn import ConvModule
 from mmcv.runner import BaseModule, auto_fp16
-from fairscale.nn.checkpoint import checkpoint_wrapper
+#from fairscale.nn.checkpoint import checkpoint_wrapper
+#from torch.utils.checkpoint import checkpoint as  checkpoint_wrapper
 from ..builder import NECKS
 
 
@@ -175,12 +176,13 @@ class SFP(BaseModule):
         )
 
         if use_act_checkpoint:
-            self.p3 = checkpoint_wrapper(self.p3)
-            self.p4 = checkpoint_wrapper(self.p4)
-            self.p5 = checkpoint_wrapper(self.p5)
-            self.p6 = checkpoint_wrapper(self.p6)
-            if self.use_p2:
-                self.p2 = checkpoint_wrapper(self.p2)
+            print("!!!! checkpoint_wrapper comment out")
+            #self.p3 = checkpoint_wrapper(self.p3)
+            #self.p4 = checkpoint_wrapper(self.p4)
+            #self.p5 = checkpoint_wrapper(self.p5)
+            #self.p6 = checkpoint_wrapper(self.p6)
+            #if self.use_p2:
+            #    self.p2 = checkpoint_wrapper(self.p2)
 
     @auto_fp16()
     def forward(self, inputs):

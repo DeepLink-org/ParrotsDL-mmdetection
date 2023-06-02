@@ -434,6 +434,7 @@ class DeformableDETRHead(DETRHead):
             scores, indexes = cls_score.view(-1).topk(max_per_img)
             det_labels = indexes % self.num_classes
             bbox_index = indexes // self.num_classes
+            bbox_index = bbox_index.to(torch.int32)
             bbox_pred = bbox_pred[bbox_index]
         else:
             scores, det_labels = F.softmax(cls_score, dim=-1)[..., :-1].max(-1)
