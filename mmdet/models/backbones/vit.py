@@ -1,6 +1,6 @@
 import logging
 import math
-import fvcore.nn.weight_init as weight_init
+#import fvcore.nn.weight_init as weight_init
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -22,6 +22,24 @@ from collections import OrderedDict
 from copy import deepcopy
 import numpy as np
 from scipy import interpolate
+
+
+def c2_msra_fill(module: nn.Module) -> None:
+    """
+    Initialize `module.weight` using the "MSRAFill" implemented in Caffe2.
+    Also initializes `module.bias` to 0.
+
+    Args:
+        module (torch.nn.Module): module to initialize.
+    """
+    # pyre-fixme[6]: For 1st param expected `Tensor` but got `Union[Module, Tensor]`.
+    nn.init.kaiming_normal_(module.weight, mode="fan_out", nonlinearity="relu")
+    if module.bias is not None:
+        # pyre-fixme[6]: Expected `Tensor` for 1st param but got `Union[nn.Module,
+        #  torch.Tensor]`.
+        nn.init.constant_(module.bias, 0)
+
+
 
 
 class PatchEmbed(nn.Module):
@@ -415,7 +433,8 @@ class ResBottleneckBlock(nn.Module):
         self.norm3 = LayerNorm(out_channels)
 
         for layer in [self.conv1, self.conv2, self.conv3]:
-            weight_init.c2_msra_fill(layer)
+            c2_msra_fill(layer)
+            #weight_init.c2_msra_fill(layer)
         for layer in [self.norm1, self.norm2]:
             layer.weight.data.fill_(1.0)
             layer.bias.data.zero_()
