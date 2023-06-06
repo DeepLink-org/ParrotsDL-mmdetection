@@ -1106,9 +1106,9 @@ class DeformableDetrTransformer(Transformer):
         scale = 2 * math.pi
         dim_t = torch.arange(
             num_pos_feats, dtype=torch.float32, device=proposals.device)
-        dim_t = dim_t.cpu()
+        #dim_t = dim_t.cpu()
         dim_t = temperature**(2 * (dim_t // 2) / num_pos_feats)
-        dim_t = dim_t.cuda()
+        #dim_t = dim_t.cuda()
         # N, L, 4
         proposals = proposals.sigmoid() * scale
         # N, L, 4, 128
