@@ -240,6 +240,7 @@ class SOLOHead(BaseMaskHead):
             gt_masks,
             featmap_sizes=featmap_sizes)
 
+
         # change from the outside list meaning multi images
         # to the outside list meaning multi levels
         mlvl_pos_mask_targets = [[] for _ in range(num_levels)]
@@ -255,6 +256,7 @@ class SOLOHead(BaseMaskHead):
                     mlvl_mask_preds[lvl][img_id, pos_masks[img_id][lvl], ...])
                 mlvl_pos_masks[lvl].append(pos_masks[img_id][lvl].flatten())
                 mlvl_labels[lvl].append(labels[img_id][lvl].flatten())
+
 
         # cat multiple image
         temp_mlvl_cls_preds = []
@@ -322,16 +324,123 @@ class SOLOHead(BaseMaskHead):
                   is positive, has shape (num_grid **2).
         """
         device = gt_labels.device
-        gt_areas = torch.sqrt((gt_bboxes[:, 2] - gt_bboxes[:, 0]) *
-                              (gt_bboxes[:, 3] - gt_bboxes[:, 1]))
+        dw = gt_bboxes[:, 2] - gt_bboxes[:, 0]
+        dh = gt_bboxes[:, 3] - gt_bboxes[:, 1]
+        gt_areas = torch.sqrt(dw * dh)
+
+        w_ranges = 0.5 * self.pos_scale * dw
+        h_ranges = 0.5 * self.pos_scale * dh
 
         mlvl_pos_mask_targets = []
         mlvl_labels = []
         mlvl_pos_masks = []
-        for (lower_bound, upper_bound), stride, featmap_size, num_grid \
-                in zip(self.scale_ranges, self.strides,
-                       featmap_sizes, self.num_grids):
 
+        infos = []
+
+
+        for lower_bound, upper_bound in self.scale_ranges:
+
+            gt_inds = ((gt_areas >= lower_bound) &
+                       (gt_areas <= upper_bound)).nonzero().flatten()
+            if len(gt_inds) == 0:
+                infos.append([None] * 5)
+                continue
+            hit_gt_labels = gt_labels[gt_inds]
+            hit_gt_masks = gt_masks[gt_inds, ...]
+
+            pos_w_ranges = w_ranges[gt_inds]
+            pos_h_ranges = h_ranges[gt_inds]
+            # Make sure hit_gt_masks has a value
+            valid_mask_flags = hit_gt_masks.sum(dim=-1).sum(dim=-1) > 0
+            valid_mask_flags = valid_mask_flags.tolist()
+
+            infos.append([hit_gt_labels, hit_gt_masks, pos_w_ranges, pos_h_ranges, valid_mask_flags])
+
+
+
+        inner_infos = []
+        for (hit_gt_labels, hit_gt_masks, pos_w_ranges, pos_h_ranges, valid_mask_flags), num_grid \
+                in zip(infos, self.num_grids):
+            if hit_gt_labels is None:
+                inner_infos.append([None] * 8)
+                continue
+            gt_labels2 = []
+            gt_masks2 = []
+            coord_ws = []
+            coord_hs = []
+            top_boxs = []
+            down_boxs = []
+            left_boxs = []
+            right_boxs = []
+            for gt_mask, gt_label, pos_h_range, pos_w_range, \
+                valid_mask_flag in \
+                    zip(hit_gt_masks, hit_gt_labels, pos_h_ranges,
+                        pos_w_ranges, valid_mask_flags):
+                if not valid_mask_flag:
+                    continue
+                gt_labels2.append(gt_label)
+                gt_masks2.append(gt_mask)
+                upsampled_size = (featmap_sizes[0][0] * 4,
+                                  featmap_sizes[0][1] * 4)
+                center_h, center_w = center_of_mass(gt_mask)
+
+                coord_ws.append(center_w * (num_grid / upsampled_size[1]))
+                coord_hs.append(center_h * (num_grid / upsampled_size[0]))
+
+                # left, top, right, down
+                top_boxs.append((center_h - pos_h_range) * (num_grid / upsampled_size[0]))
+                down_boxs.append((center_h + pos_h_range) * (num_grid / upsampled_size[0]))
+                left_boxs.append((center_w - pos_w_range) * (num_grid / upsampled_size[1]))
+                right_boxs.append((center_w + pos_w_range) * (num_grid / upsampled_size[1]))
+            inner_infos.append([gt_labels2, gt_masks2, coord_ws, coord_hs, top_boxs, down_boxs, left_boxs, right_boxs])
+
+        del dw, dh, gt_areas, w_ranges, h_ranges
+        try:
+            del gt_inds
+            del hit_gt_labels, hit_gt_masks, pos_w_ranges, pos_h_ranges
+            del pos_h_range, pos_w_range
+            del center_h, center_w
+        except NameError:
+            pass
+
+        inner_infos2 = []
+        for (gt_labels2, gt_masks2, coord_ws, coord_hs, top_boxs, down_boxs, left_boxs, right_boxs), stride, num_grid \
+                in zip(inner_infos, self.strides, self.num_grids):
+            if gt_masks2 is None:
+                inner_infos2.append([None] * 3)
+                continue
+            output_stride = stride / 2
+            bboxs = []
+            new_gt_masks = []
+            for gt_mask, coord_w, coord_h, top_box, down_box, left_box, right_box \
+                    in zip(gt_masks2, coord_ws, coord_hs, top_boxs, down_boxs, left_boxs, right_boxs):
+
+                coord_w = int(coord_w)
+                coord_h = int(coord_h)
+                top_box = max(0, int(top_box))
+                down_box = min(num_grid - 1, int(down_box))
+                left_box = max(0, int(left_box))
+                right_box = min(num_grid - 1, int(right_box))
+
+                top = max(top_box, coord_h - 1)
+                down = min(down_box, coord_h + 1)
+                left = max(coord_w - 1, left_box)
+                right = min(right_box, coord_w + 1)
+                bboxs.append([top, down, left, right])
+
+                # ins
+                gt_mask = np.uint8(gt_mask.cpu().numpy())
+                # Follow the original implementation, F.interpolate is
+                # different from cv2 and opencv
+                gt_mask = mmcv.imrescale(gt_mask, scale=1. / output_stride)
+                gt_mask = torch.from_numpy(gt_mask).to(device=device)
+                new_gt_masks.append(gt_mask)
+            inner_infos2.append([bboxs, new_gt_masks, gt_labels2])
+
+
+        target_masks = []
+        for (bboxs, new_gt_masks, gt_labels2), featmap_size, num_grid \
+                in zip(inner_infos2, featmap_sizes, self.num_grids):
             mask_target = torch.zeros(
                 [num_grid**2, featmap_size[0], featmap_size[1]],
                 dtype=torch.uint8,
@@ -343,97 +452,39 @@ class SOLOHead(BaseMaskHead):
             pos_mask = torch.zeros([num_grid**2],
                                    dtype=torch.bool,
                                    device=device)
-
-            gt_inds = ((gt_areas >= lower_bound) &
-                       (gt_areas <= upper_bound)).nonzero().flatten()
-            if len(gt_inds) == 0:
-                mlvl_pos_mask_targets.append(
-                    mask_target.new_zeros(0, featmap_size[0], featmap_size[1]))
+            if bboxs is None:
+                target_masks.append([mask_target, None])
                 mlvl_labels.append(labels)
                 mlvl_pos_masks.append(pos_mask)
                 continue
-            hit_gt_bboxes = gt_bboxes[gt_inds]
-            hit_gt_labels = gt_labels[gt_inds]
-            hit_gt_masks = gt_masks[gt_inds, ...]
 
-            pos_w_ranges = 0.5 * (hit_gt_bboxes[:, 2] -
-                                  hit_gt_bboxes[:, 0]) * self.pos_scale
-            pos_h_ranges = 0.5 * (hit_gt_bboxes[:, 3] -
-                                  hit_gt_bboxes[:, 1]) * self.pos_scale
-
-            # Make sure hit_gt_masks has a value
-            valid_mask_flags = hit_gt_masks.sum(dim=-1).sum(dim=-1) > 0
-            output_stride = stride / 2
-
-            for gt_mask, gt_label, pos_h_range, pos_w_range, \
-                valid_mask_flag in \
-                    zip(hit_gt_masks, hit_gt_labels, pos_h_ranges,
-                        pos_w_ranges, valid_mask_flags):
-                if not valid_mask_flag:
-                    continue
-                upsampled_size = (featmap_sizes[0][0] * 4,
-                                  featmap_sizes[0][1] * 4)
-                center_h, center_w = center_of_mass(gt_mask)
-
-                coord_w = int(
-                    floordiv((center_w / upsampled_size[1]), (1. / num_grid),
-                             rounding_mode='trunc'))
-                coord_h = int(
-                    floordiv((center_h / upsampled_size[0]), (1. / num_grid),
-                             rounding_mode='trunc'))
-
-                # left, top, right, down
-                top_box = max(
-                    0,
-                    int(
-                        floordiv(
-                            (center_h - pos_h_range) / upsampled_size[0],
-                            (1. / num_grid),
-                            rounding_mode='trunc')))
-                down_box = min(
-                    num_grid - 1,
-                    int(
-                        floordiv(
-                            (center_h + pos_h_range) / upsampled_size[0],
-                            (1. / num_grid),
-                            rounding_mode='trunc')))
-                left_box = max(
-                    0,
-                    int(
-                        floordiv(
-                            (center_w - pos_w_range) / upsampled_size[1],
-                            (1. / num_grid),
-                            rounding_mode='trunc')))
-                right_box = min(
-                    num_grid - 1,
-                    int(
-                        floordiv(
-                            (center_w + pos_w_range) / upsampled_size[1],
-                            (1. / num_grid),
-                            rounding_mode='trunc')))
-
-                top = max(top_box, coord_h - 1)
-                down = min(down_box, coord_h + 1)
-                left = max(coord_w - 1, left_box)
-                right = min(right_box, coord_w + 1)
-
+            for (top, down, left, right), gt_mask, gt_label in zip(bboxs, new_gt_masks, gt_labels2):
                 labels[top:(down + 1), left:(right + 1)] = gt_label
-                # ins
-                gt_mask = np.uint8(gt_mask.cpu().numpy())
-                # Follow the original implementation, F.interpolate is
-                # different from cv2 and opencv
-                gt_mask = mmcv.imrescale(gt_mask, scale=1. / output_stride)
-                gt_mask = torch.from_numpy(gt_mask).to(device=device)
-
                 for i in range(top, down + 1):
                     for j in range(left, right + 1):
                         index = int(i * num_grid + j)
                         mask_target[index, :gt_mask.shape[0], :gt_mask.
                                     shape[1]] = gt_mask
                         pos_mask[index] = True
-            mlvl_pos_mask_targets.append(mask_target[pos_mask])
+            target_masks.append([mask_target, pos_mask])
             mlvl_labels.append(labels)
             mlvl_pos_masks.append(pos_mask)
+
+        del infos, inner_infos, inner_infos2
+        try:
+            del gt_labels2, gt_masks2, coord_ws, coord_hs, top_boxs, down_boxs, left_boxs, right_boxs
+            del gt_mask, gt_label
+            del bboxs, new_gt_masks
+            del mask_target, labels, pos_mask
+        except NameError:
+            pass
+
+        for (target, mask), featmap_size in zip(target_masks, featmap_sizes):
+            if mask is None:
+                mlvl_pos_mask_targets.append(
+                    target.new_zeros(0, featmap_size[0], featmap_size[1]))
+            else:
+                mlvl_pos_mask_targets.append(target[mask])
         return mlvl_pos_mask_targets, mlvl_labels, mlvl_pos_masks
 
     def get_results(self, mlvl_mask_preds, mlvl_cls_scores, img_metas,
