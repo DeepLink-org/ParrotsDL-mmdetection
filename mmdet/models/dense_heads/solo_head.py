@@ -240,7 +240,6 @@ class SOLOHead(BaseMaskHead):
             gt_masks,
             featmap_sizes=featmap_sizes)
 
-
         # change from the outside list meaning multi images
         # to the outside list meaning multi levels
         mlvl_pos_mask_targets = [[] for _ in range(num_levels)]
@@ -256,7 +255,6 @@ class SOLOHead(BaseMaskHead):
                     mlvl_mask_preds[lvl][img_id, pos_masks[img_id][lvl], ...])
                 mlvl_pos_masks[lvl].append(pos_masks[img_id][lvl].flatten())
                 mlvl_labels[lvl].append(labels[img_id][lvl].flatten())
-
 
         # cat multiple image
         temp_mlvl_cls_preds = []
@@ -336,8 +334,6 @@ class SOLOHead(BaseMaskHead):
         mlvl_pos_masks = []
 
         infos = []
-
-
         for lower_bound, upper_bound in self.scale_ranges:
 
             gt_inds = ((gt_areas >= lower_bound) &
@@ -355,8 +351,6 @@ class SOLOHead(BaseMaskHead):
             valid_mask_flags = valid_mask_flags.tolist()
 
             infos.append([hit_gt_labels, hit_gt_masks, pos_w_ranges, pos_h_ranges, valid_mask_flags])
-
-
 
         inner_infos = []
         for (hit_gt_labels, hit_gt_masks, pos_w_ranges, pos_h_ranges, valid_mask_flags), num_grid \
@@ -436,7 +430,6 @@ class SOLOHead(BaseMaskHead):
                 gt_mask = torch.from_numpy(gt_mask).to(device=device)
                 new_gt_masks.append(gt_mask)
             inner_infos2.append([bboxs, new_gt_masks, gt_labels2])
-
 
         target_masks = []
         for (bboxs, new_gt_masks, gt_labels2), featmap_size, num_grid \
