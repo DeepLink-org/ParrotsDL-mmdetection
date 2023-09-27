@@ -484,8 +484,10 @@ class DetrTransformerEncoder(TransformerLayerSequence):
                                       f'Please specify post_norm_cfg'
             self.post_norm = None
         self.with_cp = with_cp
+        self.with_cp = 0
         if self.with_cp > 0:
             for i in range(self.with_cp):
+                print("checkpoint_warpper is not supported in this version.")
                 self.layers[i] = checkpoint_wrapper(self.layers[i])
 
     '''
@@ -1196,7 +1198,7 @@ class DeformableDetrTransformer(Transformer):
         spatial_shapes = torch.as_tensor(
             spatial_shapes, dtype=torch.long, device=feat_flatten.device)
         level_start_index = torch.cat((spatial_shapes.new_zeros(
-            (1, )), spatial_shapes.prod(1).cumsum(0)[:-1]))
+            (1, )).to(torch.int32), spatial_shapes.prod(1).cumsum(0)[:-1]))
         valid_ratios = torch.stack(
             [self.get_valid_ratio(m) for m in mlvl_masks], 1)
 
@@ -1393,7 +1395,7 @@ class DeformableDetrTransformer(Transformer):
         spatial_shapes = torch.as_tensor(
             spatial_shapes, dtype=torch.long, device=feat_flatten.device)
         level_start_index = torch.cat((spatial_shapes.new_zeros(
-            (1, )), spatial_shapes.prod(1).cumsum(0)[:-1]))
+            (1, )).to(torch.int32), spatial_shapes.prod(1).cumsum(0)[:-1]))
         valid_ratios = torch.stack(
             [self.get_valid_ratio(m) for m in mlvl_masks], 1)
 

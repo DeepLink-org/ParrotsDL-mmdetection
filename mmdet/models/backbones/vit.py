@@ -1,6 +1,6 @@
 import logging
 import math
-import fvcore.nn.weight_init as weight_init
+#import fvcore.nn.weight_init as weight_init
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -13,7 +13,7 @@ from mmcv.cnn import build_norm_layer, constant_init, trunc_normal_init
 from mmcv.cnn.bricks.transformer import FFN, build_dropout
 from mmcv.cnn.utils.weight_init import trunc_normal_
 from mmcv.utils import to_2tuple
-from fairscale.nn.checkpoint import checkpoint_wrapper
+#from fairscale.nn.checkpoint import checkpoint_wrapper
 from timm.models.layers import DropPath, Mlp, trunc_normal_
 from ..builder import BACKBONES
 from ...utils import get_root_logger
@@ -415,7 +415,10 @@ class ResBottleneckBlock(nn.Module):
         self.norm3 = LayerNorm(out_channels)
 
         for layer in [self.conv1, self.conv2, self.conv3]:
-            weight_init.c2_msra_fill(layer)
+            # weight_init.c2_msra_fill(layer)
+            nn.init.kaiming_normal_(layer.weight,mode="fan_out", nonlinearity="relu") # realize
+            if layer.bias is not None:
+                nn.init.constant_(layer.bias, 0)
         for layer in [self.norm1, self.norm2]:
             layer.weight.data.fill_(1.0)
             layer.bias.data.zero_()
@@ -657,7 +660,8 @@ class ViT(BaseModule):
                 interp_type=interp_type,
             )
             if use_act_checkpoint and i > checkpoint_idx:
-                block = checkpoint_wrapper(block)
+                # block = checkpoint_wrapper(block)
+                print("checkpoint_warpper is not supported in this version.")
             self.blocks.append(block)
 
         self._out_feature_channels = {out_feature: embed_dim}

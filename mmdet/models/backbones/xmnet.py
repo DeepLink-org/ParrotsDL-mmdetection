@@ -854,7 +854,8 @@ class XMNet(BaseModule):
         x, hw_shape = self.patch_embed(x)
 
         if self.use_abs_pos_embed:
-            absolute_pos_embed = F.interpolate(self.absolute_pos_embed, size=hw_shape, mode='bicubic')
+            #absolute_pos_embed = F.interpolate(self.absolute_pos_embed, size=hw_shape, mode='bicubic')
+            absolute_pos_embed = F.interpolate(self.absolute_pos_embed, size=hw_shape, mode='bilinear')
             x = x + absolute_pos_embed.flatten(2).transpose(1, 2)
         x = self.drop_after_pos(x)
 

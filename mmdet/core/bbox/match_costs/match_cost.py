@@ -47,7 +47,8 @@ class BBoxL1Cost:
             gt_bboxes = bbox_xyxy_to_cxcywh(gt_bboxes)
         elif self.box_format == 'xyxy':
             bbox_pred = bbox_cxcywh_to_xyxy(bbox_pred)
-        bbox_cost = torch.cdist(bbox_pred, gt_bboxes, p=1)
+        #bbox_cost = torch.cdist(bbox_pred, gt_bboxes, p=1)
+        bbox_cost = torch.cdist(bbox_pred.to('cpu'), gt_bboxes.to('cpu'), p=1).to('cuda')
         return bbox_cost * self.weight
 
 

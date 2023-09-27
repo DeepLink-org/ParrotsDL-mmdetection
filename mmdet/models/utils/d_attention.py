@@ -44,17 +44,11 @@ from torch.nn import functional as F
 import warnings
 import math
 
-from torch._C import _infer_size, _add_docstr
+from torch._C import _infer_size
 from torch.nn import _reduction as _Reduction
 from torch.nn.modules import utils
 from torch.nn.modules.utils import _single, _pair, _triple, _list_with_default
-from torch.nn import grad
-from torch import _VF
-from torch._jit_internal import boolean_dispatch, List, Optional, _overload, Tuple
-try:
-    from torch.overrides import has_torch_function, handle_torch_function
-except:
-    from torch._overrides import has_torch_function, handle_torch_function
+from torch._jit_internal import boolean_dispatch, List
 Tensor = torch.Tensor
 
 from torch.nn.functional import linear, pad, softmax, dropout
@@ -264,7 +258,7 @@ def multi_head_attention_forward(query: Tensor,
     if not torch.jit.is_scripting():
         tens_ops = (query, key, value, in_proj_weight, in_proj_bias, bias_k, bias_v,
                     out_proj_weight, out_proj_bias)
-        if any([type(t) is not Tensor for t in tens_ops]) and has_torch_function(tens_ops):
+        if False and any([type(t) is not Tensor for t in tens_ops]) and has_torch_function(tens_ops):
             return handle_torch_function(
                 multi_head_attention_forward, tens_ops, query, key, value,
                 embed_dim_to_check, num_heads, in_proj_weight, in_proj_bias,
