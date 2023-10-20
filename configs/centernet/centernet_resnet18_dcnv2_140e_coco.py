@@ -3,6 +3,12 @@ _base_ = [
     '../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py'
 ]
 
+file_client_args = dict(
+    backend='petrel',
+    path_mapping=dict({
+        'data/coco/': 'SZ20:s3://00dataset/mmdet/coco2017/',
+    }))
+
 model = dict(
     type='CenterNet',
     backbone=dict(
@@ -33,7 +39,7 @@ img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 
 train_pipeline = [
-    dict(type='LoadImageFromFile', to_float32=True, color_type='color'),
+    dict(type='LoadImageFromFile', to_float32=True, color_type='color', file_client_args=file_client_args),
     dict(type='LoadAnnotations', with_bbox=True),
     dict(
         type='PhotoMetricDistortion',
@@ -56,7 +62,7 @@ train_pipeline = [
     dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels'])
 ]
 test_pipeline = [
-    dict(type='LoadImageFromFile', to_float32=True),
+    dict(type='LoadImageFromFile', to_float32=True, file_client_args=file_client_args),
     dict(
         type='MultiScaleFlipAug',
         scale_factor=1.0,

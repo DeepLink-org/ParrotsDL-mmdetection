@@ -1,5 +1,11 @@
 _base_ = 'fcos_r50_caffe_fpn_gn-head_1x_coco.py'
 
+file_client_args = dict(
+    backend='petrel',
+    path_mapping=dict({
+        'data/coco/': 'SZ20:s3://00dataset/mmdet/coco2017/',
+    }))
+
 model = dict(
     backbone=dict(
         init_cfg=dict(
@@ -19,7 +25,7 @@ model = dict(
 img_norm_cfg = dict(
     mean=[103.530, 116.280, 123.675], std=[1.0, 1.0, 1.0], to_rgb=False)
 train_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromFile', file_client_args=file_client_args),
     dict(type='LoadAnnotations', with_bbox=True),
     dict(type='Resize', img_scale=(1333, 800), keep_ratio=True),
     dict(type='RandomFlip', flip_ratio=0.5),
@@ -29,7 +35,7 @@ train_pipeline = [
     dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels']),
 ]
 test_pipeline = [
-    dict(type='LoadImageFromFile'),
+    dict(type='LoadImageFromFile', file_client_args=file_client_args),
     dict(
         type='MultiScaleFlipAug',
         img_scale=(1333, 800),
