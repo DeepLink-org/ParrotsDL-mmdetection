@@ -16,7 +16,8 @@ model = dict(
         depth=18,
         norm_eval=False,
         norm_cfg=dict(type='BN'),
-        init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet18')),
+        #init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet18')),
+        init_cfg=dict(type='Pretrained', checkpoint='/mnt/lustre/share_data/PAT/datasets/mmdet/pretrain/resnet18-5c106cde.pth')),
     neck=dict(
         type='CTResNetNeck',
         in_channel=512,

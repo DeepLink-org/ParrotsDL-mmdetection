@@ -13,7 +13,8 @@ model = dict(
         style='caffe',
         init_cfg=dict(
             type='Pretrained',
-            checkpoint='open-mmlab://detectron2/resnet50_caffe')))
+            #checkpoint='open-mmlab://detectron2/resnet50_caffe')))
+            checkpoint='/mnt/lustre/share_data/PAT/datasets/mmdet/pretrain/resnet50_msra-5891d200.pth')))
 img_norm_cfg = dict(
     mean=[103.530, 116.280, 123.675], std=[1.0, 1.0, 1.0], to_rgb=False)
 train_pipeline = [
